@@ -1,0 +1,29 @@
+{
+	"id": "basic",
+	"title": "Basic",
+	"views": [
+		{
+			"type": "linear_layout",
+			"id": "content",
+			"width": "match_parent",
+			"height": "match_parent",
+			"orientation": "horizontal",
+			"views": [
+				{
+					"type": "edit",
+					"id": "my_edit",
+					"width": "0",
+					"height": "wrap_content",
+				},
+				{
+					"type": "Button",
+					"id": "my_button",
+					"text": "My Button",
+					"events": {
+						"click": {}
+					}
+				}
+			]
+		}
+	]
+}
