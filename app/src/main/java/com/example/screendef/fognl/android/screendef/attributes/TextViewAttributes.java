@@ -1,5 +1,6 @@
 package com.example.screendef.fognl.android.screendef.attributes;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.TextView;
@@ -23,35 +24,35 @@ public class TextViewAttributes extends ViewAttributes<TextView> {
 
         applicators.put("text", new Applicator<TextView>() {
             @Override
-            public void apply(TextView view, Object value) {
+            public void apply(Context context, TextView view, Map<String, Object> attrs, Object value) {
                 view.setText(value.toString());
             }
         });
 
         applicators.put("textSize", new Applicator<TextView>() {
             @Override
-            public void apply(TextView view, Object value) {
+            public void apply(Context context, TextView view, Map<String, Object> attrs, Object value) {
                 view.setTextSize(Float.valueOf(value.toString()));
             }
         });
 
         applicators.put("textColor", new Applicator<TextView>() {
             @Override
-            public void apply(TextView view, Object value) {
+            public void apply(Context context, TextView view, Map<String, Object> attrs, Object value) {
                 view.setTextColor(ViewUtils.parseColor(value.toString()));
             }
         });
 
         applicators.put("textAllCaps", new Applicator<TextView>() {
             @Override
-            public void apply(TextView view, Object value) {
+            public void apply(Context context, TextView view, Map<String, Object> attrs, Object value) {
                 view.setAllCaps(Boolean.valueOf(value.toString()));
             }
         });
 
         applicators.put("textStyle", new Applicator<TextView>() {
             @Override
-            public void apply(TextView view, Object value) {
+            public void apply(Context context, TextView view, Map<String, Object> attrs, Object value) {
                 switch(value.toString()) {
                     case "bold": {
                         view.setTypeface(view.getTypeface(), Typeface.BOLD);
@@ -70,11 +71,6 @@ public class TextViewAttributes extends ViewAttributes<TextView> {
                 }
             }
         });
-    }
-
-    @Override
-    public void applyTo(TextView view, Map<String, Object> attrs) {
-        super.applyTo(view, attrs);
     }
 
     @Override

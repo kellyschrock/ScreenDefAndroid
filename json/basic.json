@@ -54,6 +54,18 @@
 			"padding": "30",
 			"children": [
 				{
+					"type": "Spinner",
+					"layout_width": "wrap_content",
+					"layout_height": "wrap_content",
+					"items": [
+						{ "id": "item1", "text": "Item 1" },
+						{ "id": "item2", "text": "Item 2" },
+						{ "id": "item3", "text": "Item 3" },
+						{ "id": "item4", "text": "Item 4" },
+						{ "id": "item5", "text": "Item 5" }
+					]
+				},
+				{
 					"type": "CheckBox",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",

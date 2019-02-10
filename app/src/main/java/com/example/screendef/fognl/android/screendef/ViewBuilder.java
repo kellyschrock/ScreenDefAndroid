@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.screendef.fognl.android.screendef.attributes.LayoutAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.RadioGroupAttributes;
+import com.example.screendef.fognl.android.screendef.attributes.SpinnerAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.TextViewAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.ViewAttributes;
 
@@ -27,6 +28,7 @@ public class ViewBuilder {
         sAttributeProcessors.add(TextViewAttributes.class);
         sAttributeProcessors.add(RadioGroupAttributes.class);
         sAttributeProcessors.add(LayoutAttributes.class);
+        sAttributeProcessors.add(SpinnerAttributes.class);
     }
 
     public ViewBuilder(Context context, ViewFactory factory) {
@@ -35,19 +37,19 @@ public class ViewBuilder {
     }
 
     /** Given the specified ViewDef, hydrate it into a view hierarchy. */
-    public View buildViewFrom(ViewDef viewDef) throws ViewBuilderException {
+    public View buildViewFrom(Context context, ViewDef viewDef) throws ViewBuilderException {
         // Find a factory for this view type
         final View view = mViewFactory.instantiateViewFrom(viewDef.getType(), viewDef.attrs);
 
         if(view != null) {
-            applyAttributes(view, viewDef);
+            applyAttributes(context, view, viewDef);
 
             if(viewDef.hasChildren()) {
                 for(ViewDef childDef: viewDef.getChildren()) {
-                    final View child = buildViewFrom(childDef);
+                    final View child = buildViewFrom(context, childDef);
 
                     if(child != null) {
-                        applyAttributes(child, childDef);
+                        applyAttributes(context, child, childDef);
 
                         if(view instanceof ViewGroup) {
                             ((ViewGroup)view).addView(child, childDef.getLayoutParams(child, view));
@@ -60,9 +62,9 @@ public class ViewBuilder {
         return view;
     }
 
-    void applyAttributes(View view, ViewDef viewDef) {
+    void applyAttributes(Context context, View view, ViewDef viewDef) {
         for(ViewAttributes viewAttributes: findApplicableAttributes(view)) {
-            viewAttributes.applyTo(view, viewDef.attrs);
+            viewAttributes.applyTo(context, view, viewDef.attrs);
         }
     }
 

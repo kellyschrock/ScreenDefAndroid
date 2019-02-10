@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.screendef.fognl.android.screendef.ViewFactory;
@@ -29,6 +30,7 @@ public class BaseViewFactory implements ViewFactory {
     @Override
     public View instantiateViewFrom(String type, Map<String, Object> attrs) {
         switch (type) {
+            case "Spinner": return new Spinner(mContext);
             case "TextView": return new TextView(mContext);
             case "EditText": return new EditText(mContext);
             case "SeekBar": return new SeekBar(mContext);

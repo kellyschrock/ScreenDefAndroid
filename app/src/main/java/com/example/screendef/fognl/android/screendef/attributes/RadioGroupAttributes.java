@@ -1,5 +1,6 @@
 package com.example.screendef.fognl.android.screendef.attributes;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
@@ -21,14 +22,8 @@ public class RadioGroupAttributes extends ViewAttributes<RadioGroup> {
 
         applicators.put("orientation", new Applicator<RadioGroup>() {
             @Override
-            public void apply(RadioGroup view, Object value) {
+            public void apply(Context context, RadioGroup view, Map<String, Object> attrs, Object value) {
                 view.setOrientation(ViewUtils.toRadioGroupOrientation(value.toString()));
-            }
-        });
-
-        applicators.put("padding", new Applicator<ViewGroup>() {
-            @Override
-            public void apply(ViewGroup view, Object value) {
             }
         });
     }

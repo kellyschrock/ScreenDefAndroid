@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
             final ViewBuilder builder = new ViewBuilder(getApplicationContext(), new BaseViewFactory(getApplicationContext()));
 
-            final View view = builder.buildViewFrom(def);
+            final View view = builder.buildViewFrom(this, def);
             if(view != null) {
                 containerView.removeAllViews();
                 containerView.addView(view, def.getLayoutParams(view, containerView));
