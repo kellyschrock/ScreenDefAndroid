@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ViewAttributes<ViewType extends View> {
     public interface Applicator<ViewType> {
-        void apply(Context context, ViewType view, Values attrs, Object value);
+        void apply(Context context, ViewType view, Values attrs, String name);
     }
 
     public static boolean appliesTo(View view) {
@@ -24,22 +24,22 @@ public class ViewAttributes<ViewType extends View> {
 
     public ViewAttributes() {
         applicators.put("background", new Applicator<View>() {
-            public void apply(Context context, View view, Values attrs, Object value) {
-                view.setBackgroundColor(ViewUtils.parseColor(value.toString()));
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setBackgroundColor(ViewUtils.parseColor(attrs.getString(name)));
             }
         });
 
         applicators.put("minHeight", new Applicator<View>() {
             @Override
-            public void apply(Context context, View view, Values attrs, Object value) {
-                view.setMinimumHeight(Integer.valueOf(value.toString()));
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setMinimumHeight(attrs.getInt(name, 0));
             }
         });
 
         applicators.put("minWidth", new Applicator<View>() {
             @Override
-            public void apply(Context context, View view, Values attrs, Object value) {
-                view.setMinimumWidth(Integer.valueOf(value.toString()));
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setMinimumWidth(attrs.getInt(name, 0));
             }
         });
 
@@ -57,13 +57,10 @@ public class ViewAttributes<ViewType extends View> {
             final Applicator applicator = applicatorMap.get(attr);
 
             if(applicator != null) {
-                final Object value = attrs.get(attr);
-                if(value != null) {
-                    try {
-                        applicator.apply(context, view, attrs, value);
-                    } catch(Throwable ex) {
-                        Log.e(getClass().getSimpleName(), String.format("Unable to apply attribute %s", attr), ex);
-                    }
+                try {
+                    applicator.apply(context, view, attrs, attr);
+                } catch(Throwable ex) {
+                    Log.e(getClass().getSimpleName(), String.format("Unable to apply attribute %s", attr), ex);
                 }
             }
         }

@@ -23,8 +23,8 @@ public class RadioGroupAttributes extends ViewAttributes<RadioGroup> {
 
         applicators.put("orientation", new Applicator<RadioGroup>() {
             @Override
-            public void apply(Context context, RadioGroup view, Values attrs, Object value) {
-                view.setOrientation(ViewUtils.toRadioGroupOrientation(value.toString()));
+            public void apply(Context context, RadioGroup view, Values attrs, String name) {
+                view.setOrientation(ViewUtils.toRadioGroupOrientation(attrs.getString(name)));
             }
         });
     }

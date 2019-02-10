@@ -7,6 +7,10 @@ public class Values extends HashMap<String, Object> {
         super();
     }
 
+    public boolean has(String name) {
+        return (null != get(name));
+    }
+
     public String getString(String name) {
         Object v = get(name);
         return (v != null)? v.toString(): null;

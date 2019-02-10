@@ -26,7 +26,7 @@ public class RecyclerViewAttributes extends ViewAttributes<RecyclerView> {
 
         applicators.put("adapter", new Applicator<RecyclerView>() {
             @Override
-            public void apply(Context context, RecyclerView view, Values attrs, Object value) {
+            public void apply(Context context, RecyclerView view, Values attrs, String name) {
                 final Values adapter = (Values)attrs.get("adapter");
                 if(adapter == null) return;
 

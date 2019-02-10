@@ -25,7 +25,7 @@ public class SpinnerAttributes extends ViewAttributes<Spinner> {
 
         applicators.put("items", new Applicator<Spinner>() {
             @Override
-            public void apply(Context context, Spinner view, Values attrs, Object value) {
+            public void apply(Context context, Spinner view, Values attrs, String name) {
 
                 final List<Values> items = (List<Values>)attrs.get("items");
                 if(items != null) {

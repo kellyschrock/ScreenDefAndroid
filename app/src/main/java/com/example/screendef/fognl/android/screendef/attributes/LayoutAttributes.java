@@ -23,47 +23,47 @@ public class LayoutAttributes extends ViewAttributes<ViewGroup> {
 
         applicators.put("orientation", new Applicator<ViewGroup>() {
             @Override
-            public void apply(Context context, ViewGroup view, Values attrs, Object value) {
-                ViewUtils.callIntSetter(view, "setOrientation", ViewUtils.toLinearOrientation(value.toString()) );
+            public void apply(Context context, ViewGroup view, Values attrs, String name) {
+                ViewUtils.callIntSetter(view, "setOrientation", ViewUtils.toLinearOrientation(attrs.getString(name)));
             }
         });
 
         applicators.put("padding", new Applicator<ViewGroup>() {
             @Override
-            public void apply(Context context, ViewGroup view, Values attrs, Object value) {
-                final int padding = Integer.valueOf(value.toString()).intValue();
+            public void apply(Context context, ViewGroup view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
                 view.setPadding(padding, padding, padding, padding);
             }
         });
 
         applicators.put("paddingLeft", new Applicator<ViewGroup>() {
             @Override
-            public void apply(Context context, ViewGroup view, Values attrs, Object value) {
-                final int padding = Integer.valueOf(value.toString()).intValue();
+            public void apply(Context context, ViewGroup view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
                 view.setPadding(padding, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
             }
         });
 
         applicators.put("paddingRight", new Applicator<ViewGroup>() {
             @Override
-            public void apply(Context context, ViewGroup view, Values attrs, Object value) {
-                final int padding = Integer.valueOf(value.toString()).intValue();
+            public void apply(Context context, ViewGroup view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
                 view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), padding, view.getPaddingBottom());
             }
         });
 
         applicators.put("paddingTop", new Applicator<ViewGroup>() {
             @Override
-            public void apply(Context context, ViewGroup view, Values attrs, Object value) {
-                final int padding = Integer.valueOf(value.toString()).intValue();
+            public void apply(Context context, ViewGroup view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
                 view.setPadding(view.getPaddingLeft(), padding, view.getPaddingRight(), view.getPaddingBottom());
             }
         });
 
         applicators.put("paddingBottom", new Applicator<ViewGroup>() {
             @Override
-            public void apply(Context context, ViewGroup view, Values attrs, Object value) {
-                final int padding = Integer.valueOf(value.toString()).intValue();
+            public void apply(Context context, ViewGroup view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
                 view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), padding);
             }
         });

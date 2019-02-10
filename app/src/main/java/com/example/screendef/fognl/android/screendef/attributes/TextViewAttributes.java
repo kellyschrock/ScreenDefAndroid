@@ -25,36 +25,36 @@ public class TextViewAttributes extends ViewAttributes<TextView> {
 
         applicators.put("text", new Applicator<TextView>() {
             @Override
-            public void apply(Context context, TextView view, Values attrs, Object value) {
-                view.setText(value.toString());
+            public void apply(Context context, TextView view, Values attrs, String name) {
+                view.setText(attrs.getString(name));
             }
         });
 
         applicators.put("textSize", new Applicator<TextView>() {
             @Override
-            public void apply(Context context, TextView view, Values attrs, Object value) {
-                view.setTextSize(Float.valueOf(value.toString()));
+            public void apply(Context context, TextView view, Values attrs, String name) {
+                view.setTextSize(attrs.getFloat(name, 10));
             }
         });
 
         applicators.put("textColor", new Applicator<TextView>() {
             @Override
-            public void apply(Context context, TextView view, Values attrs, Object value) {
-                view.setTextColor(ViewUtils.parseColor(value.toString()));
+            public void apply(Context context, TextView view, Values attrs, String name) {
+                view.setTextColor(ViewUtils.parseColor(attrs.getString(name)));
             }
         });
 
         applicators.put("textAllCaps", new Applicator<TextView>() {
             @Override
-            public void apply(Context context, TextView view, Values attrs, Object value) {
-                view.setAllCaps(Boolean.valueOf(value.toString()));
+            public void apply(Context context, TextView view, Values attrs, String name) {
+                view.setAllCaps(attrs.getBoolean(name, false));
             }
         });
 
         applicators.put("textStyle", new Applicator<TextView>() {
             @Override
-            public void apply(Context context, TextView view, Values attrs, Object value) {
-                switch(value.toString()) {
+            public void apply(Context context, TextView view, Values attrs, String name) {
+                switch(attrs.getString(name)) {
                     case "bold": {
                         view.setTypeface(view.getTypeface(), Typeface.BOLD);
                         break;
@@ -75,7 +75,7 @@ public class TextViewAttributes extends ViewAttributes<TextView> {
 
         applicators.put("gravity", new Applicator<TextView>() {
             @Override
-            public void apply(Context context, TextView view, Values attrs, Object value) {
+            public void apply(Context context, TextView view, Values attrs, String name) {
                 view.setGravity(ViewUtils.toGravity(attrs.getString("gravity")));
             }
         });
