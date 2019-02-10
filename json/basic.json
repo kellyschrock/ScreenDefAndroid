@@ -1,27 +1,103 @@
 {
-	"id": "basic",
-	"title": "Basic",
-	"views": [
+	"type": "LinearLayout",
+	"layout_width": "match_parent",
+	"layout_height": "match_parent",
+	"layout_margin": "30",
+	"orientation": "vertical",
+	"gravity": "center",
+	"background": "#ffab05",
+	"padding": "80",
+	"children": [
 		{
-			"type": "linear_layout",
-			"id": "content",
-			"width": "match_parent",
-			"height": "match_parent",
+			"type": "LinearLayout",
+			"layout_width": "match_parent",
+			"layout_height": "wrap_content",
 			"orientation": "horizontal",
-			"views": [
+			"gravity": "center|left",
+			"background": "green",
+			"paddingRight": "30",
+			"paddingLeft": "90",
+			"paddingTop": "10",
+			"paddingBottom": "10",
+			"children": [
 				{
-					"type": "edit",
-					"id": "my_edit",
-					"width": "0",
-					"height": "wrap_content",
+					"type": "Button",
+					"layout_width": "wrap_content",
+					"layout_height": "wrap_content",
+					"text": "Click Me",
+					"onClick": "What do I do here"
 				},
 				{
 					"type": "Button",
-					"id": "my_button",
-					"text": "My Button",
-					"events": {
-						"click": {}
-					}
+					"layout_width": "wrap_content",
+					"layout_height": "wrap_content",
+					"layout_marginLeft": "20",
+					"text": "Or me",
+					"textAllCaps": "false",
+					"textColor": "white"
+				},
+				{
+					"type": "SeekBar",
+					"layout_width": "0",
+					"layout_height": "wrap_content",
+					"layout_weight": "0.6"
+				}
+			]
+		},
+		{
+			"type": "LinearLayout",
+			"layout_width": "match_parent",
+			"layout_height": "wrap_content",
+			"orientation": "horizontal",
+			"gravity": "center|left",
+			"background": "#66aa00aa",
+			"padding": "30",
+			"children": [
+				{
+					"type": "CheckBox",
+					"layout_width": "wrap_content",
+					"layout_height": "wrap_content",
+					"text": "CHECK this out"
+				},
+				{
+					"type": "RadioGroup",
+					"layout_width": "wrap_content",
+					"layout_height": "wrap_content",
+					"layout_marginLeft": "20",
+					"orientation": "horizontal",
+					"children": [
+						{
+							"type": "RadioButton",
+							"layout_width": "wrap_content",
+							"layout_height": "wrap_content",
+							"text": "Radio 1"
+						},
+						{
+							"type": "RadioButton",
+							"layout_width": "wrap_content",
+							"layout_height": "wrap_content",
+							"text": "Radio 2",
+							"textStyle": "bold",
+							"textSize": "22",
+							"textColor": "white"
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "FrameLayout",
+			"layout_width": "match_parent",
+			"layout_height": "wrap_content",
+			"layout_marginTop": "40",
+			"padding": "40",
+			"background": "#ff00ff",
+			"children": [
+				{
+					"type": "CheckBox",
+					"layout_width": "wrap_content",
+					"layout_height": "wrap_content",
+					"text": "Another checkbox"
 				}
 			]
 		}

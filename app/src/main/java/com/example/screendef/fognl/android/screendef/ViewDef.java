@@ -1,6 +1,6 @@
 package com.example.screendef.fognl.android.screendef;
 
-import android.app.ActionBar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -8,80 +8,110 @@ import com.example.screendef.fognl.android.screendef.util.JsonUtil;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ViewDef {
+    static final String TAG = ViewDef.class.getSimpleName();
+
     public static ViewDef populate(final ViewDef v, JSONObject jo) {
-        v.type = jo.optString("type");
-        v.id = jo.optString("id");
-        v.text = jo.optString("text");
-        v.width = jo.optString("width");
-        v.height = jo.optString("height");
-        v.weight = (float)jo.optDouble("weight", -1);
+        final Map<String, Object> map = JsonUtil.toMap(jo);
+        return populate(v, map);
+    }
 
-        JsonUtil.visit(jo.optJSONArray("views"), new JsonUtil.Visitor() {
-            @Override
-            public void visit(JSONObject jo) {
-                final ViewDef view = ViewDef.populate(new ViewDef(), jo);
-                if(view != null) v.views.add(view);
+    static ViewDef populate(final ViewDef v, Map<String, Object> map) {
+        v.type = (String)map.get("type");
+
+        final List<Map<String, Object>> children = (List<Map<String, Object>>)map.get("children");
+        if(children != null) {
+            for(Map<String, Object> child: children) {
+                v.children.add(populate(new ViewDef(), child));
             }
-        });
 
+            map.remove("children");
+        }
 
+        v.attrs.putAll(map);
         return v;
     }
 
     String type;
-    String id;
-    String text;
-    String width;
-    String height;
-    float weight;
-    final List<ViewDef> views = new ArrayList<>();
+    final Map<String, Object> attrs = new HashMap<>();
+    final List<ViewDef> children = new ArrayList<>();
 
     public ViewDef() {
         super();
     }
 
-    public String getType() {
-        return type;
+    public String getType() { return type; }
+
+    public Object get(String name) {
+        return attrs.get(name);
     }
 
-    public String getId() {
-        return id;
+    public <T> T get(String name, T defValue) {
+        Object v = attrs.get(name);
+        return (v == null) ? defValue: (T)v;
     }
 
-    public String getText() {
-        return text;
+    public List<ViewDef> getChildren() {
+        return children;
     }
 
-    public String getWidth() {
-        return width;
+    public boolean hasChildren() { return !children.isEmpty(); }
+
+    static Class findClassIn(Class type, String name) {
+        try {
+            final Class[] nestedTypes = type.getDeclaredClasses();
+            if(nestedTypes != null) {
+                for(Class nestedType: nestedTypes) {
+                    if(nestedType.getName().endsWith(name)) {
+                        return nestedType;
+                    }
+                }
+            }
+
+            return null;
+        } catch(Throwable ex) {
+            return null;
+        }
     }
 
-    public String getHeight() {
-        return height;
-    }
+    public ViewGroup.LayoutParams getLayoutParams(View view, View parentView) {
+        final int width = ViewUtils.toViewSize((String)attrs.get("layout_width"));
+        final int height = ViewUtils.toViewSize((String)attrs.get("layout_height"));
 
-    public float getWeight() {
-        return weight;
-    }
+        final Class paramsClass = findClassIn(parentView.getClass(), "LayoutParams");
 
-    public List<ViewDef> getViews() {
-        return views;
+        if(paramsClass != null) {
+            try {
+                Constructor ctor = paramsClass.getConstructor(Integer.TYPE, Integer.TYPE);
+                final ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams)ctor.newInstance(width, height);
+
+                ViewUtils.setMargins(attrs, lp);
+                ViewUtils.setWeights(attrs, lp);
+                ViewUtils.setGravities(attrs, view, lp);
+
+                return lp;
+            } catch(Throwable ex) {
+                Log.e(TAG, ex.getMessage(), ex);
+            }
+        }
+
+        final ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(width, height);
+
+        return lp;
     }
 
     @Override
     public String toString() {
         return "ViewDef{" +
-                "type='" + type + '\'' +
-                ", id='" + id + '\'' +
-                ", text='" + text + '\'' +
-                ", width='" + width + '\'' +
-                ", height='" + height + '\'' +
-                ", weight=" + weight +
-                ", views=" + views +
+                "type=" + type +
+                "  attrs=" + attrs +
+                ", children=" + children +
                 '}';
     }
 }
