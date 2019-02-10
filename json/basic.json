@@ -106,10 +106,33 @@
 			"background": "#ff00ff",
 			"children": [
 				{
-					"type": "CheckBox",
-					"layout_width": "wrap_content",
+					"type": "RecyclerView",
+					"layout_width": "match_parent",
 					"layout_height": "wrap_content",
-					"text": "Another checkbox"
+					"background": "black",
+					"minWidth": "80",
+					"minHeight": "60",
+					"adapter": {
+						"item_style": {
+							"title": {
+								"textColor": "yellow",
+								"textStyle": "bold",
+								"textSize": "20"
+							},
+							"subtext": {
+								"textColor": "white",
+								"gravity": "right"
+							}
+						},
+						"items": [
+							{ "id": "item1", "title": "Title 1", "subtitle": "sub-title 1" },
+							{ "id": "item2", "title": "Title 2", "subtitle": "sub-title 2" },
+							{ "id": "item3", "title": "Title 3", "subtitle": "sub-title 3" },
+							{ "id": "item4", "title": "Title 4", "subtitle": "sub-title 4" },
+							{ "id": "item5", "title": "Title 5", "subtitle": "sub-title 5" },
+							{ "id": "item6", "title": "Title 6", "subtitle": "sub-title 6" }
+						]
+					}
 				}
 			]
 		}

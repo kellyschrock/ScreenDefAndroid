@@ -1,5 +1,7 @@
 package com.example.screendef.fognl.android.screendef.util;
 
+import com.example.screendef.fognl.android.screendef.Values;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,8 +27,8 @@ public class JsonUtil {
         }
     }
 
-    public static Map<String, Object> toMap(JSONObject jo) {
-        final Map<String, Object> map = new HashMap<>();
+    public static Values toMap(JSONObject jo) {
+        final Values map = new Values();
 
         final JSONArray names = jo.names();
         for(int i = 0, size = names.length(); i < size; ++i) {

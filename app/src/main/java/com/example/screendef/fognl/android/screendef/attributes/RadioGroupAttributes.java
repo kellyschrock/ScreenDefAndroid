@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
+import com.example.screendef.fognl.android.screendef.Values;
 import com.example.screendef.fognl.android.screendef.ViewUtils;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class RadioGroupAttributes extends ViewAttributes<RadioGroup> {
 
         applicators.put("orientation", new Applicator<RadioGroup>() {
             @Override
-            public void apply(Context context, RadioGroup view, Map<String, Object> attrs, Object value) {
+            public void apply(Context context, RadioGroup view, Values attrs, Object value) {
                 view.setOrientation(ViewUtils.toRadioGroupOrientation(value.toString()));
             }
         });

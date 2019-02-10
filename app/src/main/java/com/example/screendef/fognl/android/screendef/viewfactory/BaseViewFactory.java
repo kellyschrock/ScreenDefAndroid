@@ -22,25 +22,20 @@ import java.util.Map;
 public class BaseViewFactory implements ViewFactory {
     static final String TAG = BaseViewFactory.class.getSimpleName();
 
-    private final Context mContext;
-    public BaseViewFactory(Context context) {
-        mContext = context;
-    }
-
     @Override
-    public View instantiateViewFrom(String type, Map<String, Object> attrs) {
+    public View instantiateViewFrom(Context context, String type, Map<String, Object> attrs) {
         switch (type) {
-            case "Spinner": return new Spinner(mContext);
-            case "TextView": return new TextView(mContext);
-            case "EditText": return new EditText(mContext);
-            case "SeekBar": return new SeekBar(mContext);
-            case "Button": return new Button(mContext);
-            case "RadioGroup": return new RadioGroup(mContext);
-            case "RadioButton": return new RadioButton(mContext);
-            case "CheckBox": return new CheckBox(mContext);
-            case "FrameLayout": return new FrameLayout(mContext);
-            case "LinearLayout": return new LinearLayout(mContext);
-            case "RelativeLayout": return new RelativeLayout(mContext);
+            case "Spinner": return new Spinner(context);
+            case "TextView": return new TextView(context);
+            case "EditText": return new EditText(context);
+            case "SeekBar": return new SeekBar(context);
+            case "Button": return new Button(context);
+            case "RadioGroup": return new RadioGroup(context);
+            case "RadioButton": return new RadioButton(context);
+            case "CheckBox": return new CheckBox(context);
+            case "FrameLayout": return new FrameLayout(context);
+            case "LinearLayout": return new LinearLayout(context);
+            case "RelativeLayout": return new RelativeLayout(context);
 
             default: {
                 Log.w(TAG, "unknown type " + type);

@@ -93,7 +93,7 @@ public class ViewUtils {
         return gravity;
     }
 
-    public static void setGravities(Map<String, Object> attrs, View view, ViewGroup.LayoutParams lp) {
+    public static void setGravities(Values attrs, View view, ViewGroup.LayoutParams lp) {
         try {
             if(attrs.containsKey("layout_gravity")) {
                 setFieldValue(lp, "gravity", new Integer[] {toGravity(attrs.get("layout_gravity").toString())} );
@@ -108,7 +108,7 @@ public class ViewUtils {
         }
     }
 
-    public static void setWeights(Map<String, Object> attrs, ViewGroup.LayoutParams lp) {
+    public static void setWeights(Values attrs, ViewGroup.LayoutParams lp) {
         try {
             if(attrs.containsKey("layout_weight")) {
                 ((LinearLayout.LayoutParams)lp).weight = Float.valueOf(attrs.get("layout_weight").toString());
@@ -118,7 +118,7 @@ public class ViewUtils {
         }
     }
 
-    public static void setMargins(Map<String, Object> attrs, ViewGroup.LayoutParams lp) throws Throwable {
+    public static void setMargins(Values attrs, ViewGroup.LayoutParams lp) throws Throwable {
         if(lp instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams mp = (ViewGroup.MarginLayoutParams)lp;
 

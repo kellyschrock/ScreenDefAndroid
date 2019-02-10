@@ -39,7 +39,7 @@ public class ViewDef {
     }
 
     String type;
-    final Map<String, Object> attrs = new HashMap<>();
+    final Values attrs = new Values();
     final List<ViewDef> children = new ArrayList<>();
 
     public ViewDef() {

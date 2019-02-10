@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.screendef.fognl.android.screendef.SpinnerItem;
+import com.example.screendef.fognl.android.screendef.Values;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,13 +25,13 @@ public class SpinnerAttributes extends ViewAttributes<Spinner> {
 
         applicators.put("items", new Applicator<Spinner>() {
             @Override
-            public void apply(Context context, Spinner view, Map<String, Object> attrs, Object value) {
+            public void apply(Context context, Spinner view, Values attrs, Object value) {
 
-                final List<Map<String, Object>> items = (List<Map<String, Object>>)attrs.get("items");
+                final List<Values> items = (List<Values>)attrs.get("items");
                 if(items != null) {
                     final List<SpinnerItem> spinnerItems = new ArrayList<>();
 
-                    for(Map<String, Object> item: items) {
+                    for(Values item: items) {
                         spinnerItems.add(new SpinnerItem(item.get("id").toString(), item.get("text").toString()));
                     }
 

@@ -1,9 +1,10 @@
 package com.example.screendef.fognl.android.screendef;
 
+import android.content.Context;
 import android.view.View;
 
 import java.util.Map;
 
 public interface ViewFactory {
-    View instantiateViewFrom(String type, Map<String, Object> attrs);
+    View instantiateViewFrom(Context context, String type, Map<String, Object> attrs);
 }

@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.example.screendef.fognl.android.screendef.ViewBuilder;
 import com.example.screendef.fognl.android.screendef.ViewDef;
 import com.example.screendef.fognl.android.screendef.ViewFactory;
+import com.example.screendef.fognl.android.screendef.attributes.RecyclerViewAttributes;
 import com.example.screendef.fognl.android.screendef.util.Streams;
 import com.example.screendef.fognl.android.screendef.viewfactory.BaseViewFactory;
+import com.example.screendef.fognl.android.screendef.viewfactory.RecyclerViewFactory;
 
 import org.json.JSONObject;
 
@@ -55,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
         }) {
             findViewById(id).setOnClickListener(mClickListener);
         }
+
+        ViewBuilder.addViewFactory(new RecyclerViewFactory());
+        ViewBuilder.addAttributeProcessor(RecyclerViewAttributes.class);
     }
 
     void checkFileReadPermissions() {
@@ -75,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             final ViewDef def = ViewDef.populate(new ViewDef(), jo);
             Log.v(TAG, "def=" + def);
 
-            final ViewBuilder builder = new ViewBuilder(getApplicationContext(), new BaseViewFactory(getApplicationContext()));
+            final ViewBuilder builder = new ViewBuilder(getApplicationContext());
 
             final View view = builder.buildViewFrom(this, def);
             if(view != null) {

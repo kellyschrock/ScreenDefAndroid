@@ -1,9 +1,11 @@
 package com.example.screendef.fognl.android.screendef.attributes;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.example.screendef.fognl.android.screendef.Values;
 import com.example.screendef.fognl.android.screendef.ViewUtils;
 
 import java.util.HashMap;
@@ -11,28 +13,32 @@ import java.util.Map;
 
 public class ViewAttributes<ViewType extends View> {
     public interface Applicator<ViewType> {
-        void apply(Context context, ViewType view, Map<String, Object> attrs, Object value);
+        void apply(Context context, ViewType view, Values attrs, Object value);
+    }
+
+    public static boolean appliesTo(View view) {
+        return true;
     }
 
     private final Map<String, Applicator> applicators = new HashMap<>();
 
     public ViewAttributes() {
         applicators.put("background", new Applicator<View>() {
-            public void apply(Context context, View view, Map<String, Object> attrs, Object value) {
+            public void apply(Context context, View view, Values attrs, Object value) {
                 view.setBackgroundColor(ViewUtils.parseColor(value.toString()));
             }
         });
 
         applicators.put("minHeight", new Applicator<View>() {
             @Override
-            public void apply(Context context, View view, Map<String, Object> attrs, Object value) {
+            public void apply(Context context, View view, Values attrs, Object value) {
                 view.setMinimumHeight(Integer.valueOf(value.toString()));
             }
         });
 
         applicators.put("minWidth", new Applicator<View>() {
             @Override
-            public void apply(Context context, View view, Map<String, Object> attrs, Object value) {
+            public void apply(Context context, View view, Values attrs, Object value) {
                 view.setMinimumWidth(Integer.valueOf(value.toString()));
             }
         });
@@ -44,7 +50,7 @@ public class ViewAttributes<ViewType extends View> {
         return applicators;
     }
 
-    public void applyTo(Context context, ViewType view, Map<String, Object> attrs) {
+    public void applyTo(Context context, ViewType view, Values attrs) {
         final Map<String, Applicator> applicatorMap = getApplicators();
 
         for(String attr: attrs.keySet()) {
