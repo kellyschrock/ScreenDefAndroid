@@ -18,10 +18,6 @@ public class ImageViewAttributes extends ViewAttributes<TextView> {
 
     private final Map<String, Applicator> applicators = new HashMap<>();
 
-    public static boolean appliesTo(View view) {
-        return (view instanceof ImageView);
-    }
-
     public ImageViewAttributes() {
         super();
 
@@ -37,5 +33,10 @@ public class ImageViewAttributes extends ViewAttributes<TextView> {
     @Override
     public Map<String, Applicator> getApplicators() {
         return applicators;
+    }
+
+    @Override
+    public boolean appliesTo(View view) {
+        return (view instanceof ImageView);
     }
 }

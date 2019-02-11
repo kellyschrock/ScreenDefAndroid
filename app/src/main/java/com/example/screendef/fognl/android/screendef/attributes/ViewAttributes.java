@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
@@ -23,10 +22,6 @@ public class ViewAttributes<ViewType extends View> {
         void apply(Context context, ViewType view, Values attrs, String name);
     }
 
-    public static boolean appliesTo(View view) {
-        return true;
-    }
-
     private final Map<String, Applicator> applicators = new HashMap<>();
 
     public ViewAttributes() {
@@ -42,6 +37,8 @@ public class ViewAttributes<ViewType extends View> {
                             view.setBackground(bd);
                         }
                     });
+                } else if(v.equals("@null")) {
+                    view.setBackgroundResource(0);
                 } else {
                     view.setBackgroundColor(ViewUtils.parseColor(v, 0));
                 }
@@ -127,6 +124,10 @@ public class ViewAttributes<ViewType extends View> {
 
 
         // TODO: And so on
+    }
+
+    public boolean appliesTo(View view) {
+        return true;
     }
 
     public Map<String, Applicator> getApplicators() {

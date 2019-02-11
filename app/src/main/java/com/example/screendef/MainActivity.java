@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ViewBuilder.addViewFactory(new RecyclerViewFactory());
-        ViewBuilder.addAttributeProcessor(RecyclerViewAttributes.class);
+        ViewBuilder.addAttributeProcessor(new RecyclerViewAttributes());
     }
 
     void checkFileReadPermissions() {

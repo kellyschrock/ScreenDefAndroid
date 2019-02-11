@@ -15,10 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 public class RecyclerViewAttributes extends ViewAttributes<RecyclerView> {
-    public static boolean appliesTo(View view) {
-        return (view instanceof RecyclerView);
-    }
-
     private final Map<String, Applicator> applicators = new HashMap<>();
 
     public RecyclerViewAttributes() {
@@ -52,5 +48,10 @@ public class RecyclerViewAttributes extends ViewAttributes<RecyclerView> {
     @Override
     public Map<String, Applicator> getApplicators() {
         return applicators;
+    }
+
+    @Override
+    public boolean appliesTo(View view) {
+        return (view instanceof RecyclerView);
     }
 }

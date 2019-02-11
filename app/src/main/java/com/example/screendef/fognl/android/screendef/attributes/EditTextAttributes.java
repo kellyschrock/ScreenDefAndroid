@@ -25,10 +25,6 @@ public class EditTextAttributes extends ViewAttributes<TextView> {
 
     private final Map<String, Applicator> applicators = new HashMap<>();
 
-    public static boolean appliesTo(View view) {
-        return (view instanceof EditText);
-    }
-
     public EditTextAttributes() {
         super();
 
@@ -59,6 +55,11 @@ public class EditTextAttributes extends ViewAttributes<TextView> {
                 view.setFilters(new InputFilter[] { new InputFilter.LengthFilter(attrs.getInt(name, 100))});
             }
         });
+    }
+
+    @Override
+    public boolean appliesTo(View view) {
+        return (view instanceof EditText);
     }
 
     @Override

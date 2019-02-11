@@ -4,11 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -22,7 +20,6 @@ import com.example.screendef.fognl.android.screendef.attributes.TextViewAttribut
 import com.example.screendef.fognl.android.screendef.attributes.ViewAttributes;
 import com.example.screendef.fognl.android.screendef.viewfactory.BaseViewFactory;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -33,15 +30,15 @@ public class ViewBuilder {
 
     private final Context mContext;
 
-    private static final List<Class> sAttributeProcessors = new ArrayList<>();
+    private static final List<ViewAttributes> sAttributeProcessors = new ArrayList<>();
 
     static {
-        sAttributeProcessors.add(TextViewAttributes.class);
-        sAttributeProcessors.add(EditTextAttributes.class);
-        sAttributeProcessors.add(RadioGroupAttributes.class);
-        sAttributeProcessors.add(LayoutAttributes.class);
-        sAttributeProcessors.add(ImageViewAttributes.class);
-        sAttributeProcessors.add(SpinnerAttributes.class);
+        sAttributeProcessors.add(new TextViewAttributes());
+        sAttributeProcessors.add(new EditTextAttributes());
+        sAttributeProcessors.add(new RadioGroupAttributes());
+        sAttributeProcessors.add(new LayoutAttributes());
+        sAttributeProcessors.add(new ImageViewAttributes());
+        sAttributeProcessors.add(new SpinnerAttributes());
     }
 
     private static final Set<ViewFactory> sViewFactories = new HashSet<>();
@@ -50,7 +47,7 @@ public class ViewBuilder {
         sViewFactories.add(new BaseViewFactory());
     }
 
-    public static void addAttributeProcessor(Class<? extends ViewAttributes> type) {
+    public static void addAttributeProcessor(ViewAttributes type) {
         sAttributeProcessors.add(type);
     }
 
@@ -119,15 +116,9 @@ public class ViewBuilder {
         // Applies to everything
         list.add(new ViewAttributes());
 
-        for(Class attrClass: sAttributeProcessors) {
-            try {
-                final Method supports = attrClass.getDeclaredMethod("appliesTo", new Class[] { View.class });
-                boolean ok = (Boolean)supports.invoke(null, view);
-                if(ok) {
-                    list.add((ViewAttributes)attrClass.newInstance());
-                }
-            } catch(Throwable ex) {
-                Log.e(TAG, ex.getMessage(), ex);
+        for(ViewAttributes a: sAttributeProcessors) {
+            if(a.appliesTo(view)) {
+                list.add(a);
             }
         }
 

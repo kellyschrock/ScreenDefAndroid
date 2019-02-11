@@ -12,9 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RadioGroupAttributes extends ViewAttributes<RadioGroup> {
-    public static boolean appliesTo(View view) {
-        return (view instanceof RadioGroup);
-    }
 
     private final Map<String, Applicator> applicators = new HashMap<>();
 
@@ -32,5 +29,10 @@ public class RadioGroupAttributes extends ViewAttributes<RadioGroup> {
     @Override
     public Map<String, Applicator> getApplicators() {
         return applicators;
+    }
+
+    @Override
+    public boolean appliesTo(View view) {
+        return (view instanceof RadioGroup);
     }
 }

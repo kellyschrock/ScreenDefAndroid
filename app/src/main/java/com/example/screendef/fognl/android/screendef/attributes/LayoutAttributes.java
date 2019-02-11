@@ -12,9 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LayoutAttributes extends ViewAttributes<ViewGroup> {
-    public static boolean appliesTo(View view) {
-        return (view instanceof ViewGroup) && (view.getClass().getName().endsWith("Layout"));
-    }
 
     private final Map<String, Applicator> applicators = new HashMap<>();
 
@@ -72,5 +69,10 @@ public class LayoutAttributes extends ViewAttributes<ViewGroup> {
     @Override
     public Map<String, Applicator> getApplicators() {
         return applicators;
+    }
+
+    @Override
+    public boolean appliesTo(View view) {
+        return (view instanceof ViewGroup) && (view.getClass().getName().endsWith("Layout"));
     }
 }

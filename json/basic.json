@@ -31,10 +31,11 @@
 					"type": "Button",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
-					"text": "Click Me",
+					"text": "Naked button",
 					"onClick": "What do I do here",
 					"textAllCaps": false,
-					"alpha": 0.4
+					"textColor": "yellow",
+					"background": "@null"
 				},
 				{
 					"type": "Button",
@@ -43,7 +44,8 @@
 					"layout_marginLeft": "20",
 					"text": "Or me",
 					"textAllCaps": true,
-					"textColor": "white"
+					"textColor": "white",
+					"alpha": 0.4
 				},
 				{
 					"type": "EditText",

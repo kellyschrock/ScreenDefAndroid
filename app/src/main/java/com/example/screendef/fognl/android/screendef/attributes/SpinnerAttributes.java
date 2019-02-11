@@ -14,10 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class SpinnerAttributes extends ViewAttributes<Spinner> {
-    public static boolean appliesTo(View view) {
-        return (view instanceof Spinner);
-    }
-
     private final Map<String, Applicator> applicators = new HashMap<>();
 
     public SpinnerAttributes() {
@@ -48,5 +44,10 @@ public class SpinnerAttributes extends ViewAttributes<Spinner> {
     @Override
     public Map<String, Applicator> getApplicators() {
         return applicators;
+    }
+
+    @Override
+    public boolean appliesTo(View view) {
+        return (view instanceof Spinner);
     }
 }
