@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.screendef.R;
 import com.example.screendef.fognl.android.screendef.Values;
 import com.example.screendef.fognl.android.screendef.ViewBuilder;
 import com.example.screendef.fognl.android.screendef.ViewUtils;
@@ -18,19 +19,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ViewAttributes<ViewType extends View> {
+    static final String TAG = ViewAttributes.class.getSimpleName();
+
     public interface Applicator<ViewType> {
         void apply(Context context, ViewType view, Values attrs, String name);
     }
 
     private final Map<String, Applicator> applicators = new HashMap<>();
+    private final Map<String, View> mViewIds;
 
     public ViewAttributes() {
+        this(null);
+    }
+
+    public ViewAttributes(Map<String, View> viewIds) {
+        mViewIds = viewIds;
+
         applicators.put("background", new Applicator<View>() {
             public void apply(Context context, final View view, Values attrs, String name) {
                 final String v = attrs.getString(name);
 
                 if(v.startsWith("http")) {
-                    ViewBuilder.getIcon(view.getContext(), v, new SimpleTarget<Bitmap>() {
+                    ViewBuilder.get().getIcon(view.getContext(), v, new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             final BitmapDrawable bd = new BitmapDrawable(view.getResources(), resource);
@@ -118,7 +128,19 @@ public class ViewAttributes<ViewType extends View> {
         applicators.put("tag", new Applicator<View>() {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {
-                view.setTag(attrs.get(name));
+                view.setTag(R.string.tag_view_tag, attrs.get(name));
+            }
+        });
+
+        applicators.put("id", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                final String id = attrs.getString(name);
+                view.setTag(R.string.tag_view_id, id);
+
+                if(mViewIds != null) {
+                    mViewIds.put(id, view);
+                }
             }
         });
 
@@ -148,5 +170,7 @@ public class ViewAttributes<ViewType extends View> {
                 }
             }
         }
+
+        Log.v(TAG, String.format("viewIds=%s", mViewIds));
     }
 }

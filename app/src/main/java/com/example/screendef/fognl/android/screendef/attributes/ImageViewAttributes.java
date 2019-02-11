@@ -25,7 +25,7 @@ public class ImageViewAttributes extends ViewAttributes<TextView> {
             @Override
             public void apply(Context context, ImageView view, Values attrs, String name) {
                 final String url = attrs.getString(name);
-                ViewBuilder.setImageViewIcon(view, url);
+                ViewBuilder.get().setImageViewIcon(view, url);
             }
         });
     }

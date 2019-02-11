@@ -38,11 +38,11 @@ public class RecyclerItemHolder extends RecyclerView.ViewHolder {
             final Values subStyle = style.getObject("subtext", null);
 
             if(titleStyle != null) {
-                ViewBuilder.applyAttributes(itemView.getContext(), title, titleStyle);
+                ViewBuilder.get().applyAttributes(itemView.getContext(), title, titleStyle);
             }
 
             if(subStyle != null) {
-                ViewBuilder.applyAttributes(itemView.getContext(), subtext, subStyle);
+                ViewBuilder.get().applyAttributes(itemView.getContext(), subtext, subStyle);
             }
         }
     }

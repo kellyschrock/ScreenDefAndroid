@@ -87,7 +87,7 @@ public class TextViewAttributes extends ViewAttributes<TextView> {
             @Override
             public void apply(Context context, final TextView view, Values attrs, String name) {
                 final String url = attrs.getString(name);
-                ViewBuilder.getIcon(view.getContext(), url, new ViewBuilder.BitmapCallback() {
+                ViewBuilder.get().getIcon(view.getContext(), url, new ViewBuilder.BitmapCallback() {
                     @Override
                     public void onBitmap(Bitmap bmp) {
                         final BitmapDrawable bd = new BitmapDrawable(view.getContext().getResources(), bmp);
@@ -101,7 +101,7 @@ public class TextViewAttributes extends ViewAttributes<TextView> {
             @Override
             public void apply(Context context, final TextView view, Values attrs, String name) {
                 final String url = attrs.getString(name);
-                ViewBuilder.getIcon(view.getContext(), url, new ViewBuilder.BitmapCallback() {
+                ViewBuilder.get().getIcon(view.getContext(), url, new ViewBuilder.BitmapCallback() {
                     @Override
                     public void onBitmap(Bitmap bmp) {
                         final BitmapDrawable bd = new BitmapDrawable(view.getContext().getResources(), bmp);

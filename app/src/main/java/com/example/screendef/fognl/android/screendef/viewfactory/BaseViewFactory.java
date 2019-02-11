@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -30,6 +31,7 @@ public class BaseViewFactory implements ViewFactory {
             case "Spinner": return new Spinner(context);
             case "TextView": return new TextView(context);
             case "EditText": return new EditText(context);
+            case "ProgressBar": return new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
             case "SeekBar": return new SeekBar(context);
             case "Button": return new Button(context);
             case "RadioGroup": return new RadioGroup(context);

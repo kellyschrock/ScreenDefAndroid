@@ -29,13 +29,15 @@
 				},
 				{
 					"type": "Button",
+					"id": "my_button",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"text": "Naked button",
 					"onClick": "What do I do here",
 					"textAllCaps": false,
 					"textColor": "yellow",
-					"background": "@null"
+					"background": "@null",
+					"tag": "Here's some data in a tag"
 				},
 				{
 					"type": "Button",
@@ -49,6 +51,7 @@
 				},
 				{
 					"type": "EditText",
+					"id": "edit_name",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"minWidth": 300,
@@ -57,10 +60,14 @@
 					"hint": "A hint"
 				},
 				{
-					"type": "SeekBar",
+					"type": "ProgressBar",
+					"id": "seeker",
 					"layout_width": "0",
 					"layout_height": "wrap_content",
-					"layout_weight": "0.6"
+					"layout_weight": "0.6",
+					"max": 100,
+					"progress": 20,
+					"indeterminate": false
 				}
 			]
 		},
