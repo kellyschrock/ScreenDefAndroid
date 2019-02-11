@@ -1,11 +1,18 @@
 package com.example.screendef.fognl.android.screendef.attributes;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.screendef.fognl.android.screendef.Values;
+import com.example.screendef.fognl.android.screendef.ViewBuilder;
 import com.example.screendef.fognl.android.screendef.ViewUtils;
 
 import java.util.HashMap;
@@ -40,7 +47,7 @@ public class TextViewAttributes extends ViewAttributes<TextView> {
         applicators.put("textColor", new Applicator<TextView>() {
             @Override
             public void apply(Context context, TextView view, Values attrs, String name) {
-                view.setTextColor(ViewUtils.parseColor(attrs.getString(name)));
+                view.setTextColor(ViewUtils.parseColor(attrs.getString(name), 0));
             }
         });
 
@@ -77,6 +84,41 @@ public class TextViewAttributes extends ViewAttributes<TextView> {
             @Override
             public void apply(Context context, TextView view, Values attrs, String name) {
                 view.setGravity(ViewUtils.toGravity(attrs.getString("gravity")));
+            }
+        });
+
+        applicators.put("iconLeft", new Applicator<TextView>() {
+            @Override
+            public void apply(Context context, final TextView view, Values attrs, String name) {
+                final String url = attrs.getString(name);
+                ViewBuilder.getIcon(view.getContext(), url, new ViewBuilder.BitmapCallback() {
+                    @Override
+                    public void onBitmap(Bitmap bmp) {
+                        final BitmapDrawable bd = new BitmapDrawable(view.getContext().getResources(), bmp);
+                        view.setCompoundDrawablesWithIntrinsicBounds(bd, null, null, null);
+                    }
+                });
+            }
+        });
+
+        applicators.put("iconRight", new Applicator<TextView>() {
+            @Override
+            public void apply(Context context, final TextView view, Values attrs, String name) {
+                final String url = attrs.getString(name);
+                ViewBuilder.getIcon(view.getContext(), url, new ViewBuilder.BitmapCallback() {
+                    @Override
+                    public void onBitmap(Bitmap bmp) {
+                        final BitmapDrawable bd = new BitmapDrawable(view.getContext().getResources(), bmp);
+                        view.setCompoundDrawablesWithIntrinsicBounds(null, null, bd, null);
+                    }
+                });
+            }
+        });
+
+        applicators.put("iconPadding", new Applicator<TextView>() {
+            @Override
+            public void apply(Context context, TextView view, Values attrs, String name) {
+                view.setCompoundDrawablePadding(attrs.getInt(name, 0));
             }
         });
     }

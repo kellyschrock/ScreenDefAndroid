@@ -1,6 +1,7 @@
 package com.example.screendef.fognl.android.screendef;
 
 import android.graphics.Color;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -8,19 +9,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 public class ViewUtils {
     static final String TAG = ViewUtils.class.getSimpleName();
 
-    static class Grav {
+    static class Marklar {
         final String name;
-        final int gravity;
-        Grav(String name, int g) {
+        final int value;
+
+        Marklar(String name, int g) {
             this.name = name;
-            this.gravity = g;
+            this.value = g;
         }
     }
 
@@ -35,6 +38,31 @@ public class ViewUtils {
         }
 
         return toInt(v, 0);
+    }
+
+    public static int toEditTextInputType(String value) {
+        int inputType = 0;
+        String[] parts = value.split("\\|");
+
+        for(Marklar mm: new Marklar[] {
+                new Marklar("textCapWords", InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS),
+                new Marklar("textCapSentences", InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES),
+                new Marklar("textCapCharacters", InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS),
+                new Marklar("textEmailAddress", InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS),
+                new Marklar("textPassword", InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD),
+                new Marklar("textPersonName", InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME),
+                new Marklar("textShortMessage", InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE),
+                new Marklar("textLongMessage", InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE),
+                new Marklar("number", InputType.TYPE_CLASS_NUMBER),
+                new Marklar("numberDecimal", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL),
+                new Marklar("numberPassword", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD)
+        }) {
+            if(containsString(parts, mm.name)) {
+                inputType |= mm.value;
+            }
+        }
+
+        return inputType;
     }
 
     public static int toLinearOrientation(String value) {
@@ -53,11 +81,11 @@ public class ViewUtils {
         } catch(Throwable ex) { return def; }
     }
 
-    public static int parseColor(String color) {
+    public static int parseColor(String color, int fallback) {
         try {
             return Color.parseColor(color);
         } catch(Throwable ex) {
-            return Color.RED;
+            return fallback;
         }
     }
 
@@ -76,17 +104,17 @@ public class ViewUtils {
 
         final String[] parts = grav.split("\\|");
 
-        for(Grav derp: new Grav[] {
-                new Grav("center_vertical", Gravity.CENTER_VERTICAL),
-                new Grav("center_horizontal", Gravity.CENTER_HORIZONTAL),
-                new Grav("center", Gravity.CENTER),
-                new Grav("left", Gravity.LEFT),
-                new Grav("top", Gravity.TOP),
-                new Grav("right", Gravity.RIGHT),
-                new Grav("bottom", Gravity.BOTTOM)
+        for(Marklar derp: new Marklar[] {
+                new Marklar("center_vertical", Gravity.CENTER_VERTICAL),
+                new Marklar("center_horizontal", Gravity.CENTER_HORIZONTAL),
+                new Marklar("center", Gravity.CENTER),
+                new Marklar("left", Gravity.LEFT),
+                new Marklar("top", Gravity.TOP),
+                new Marklar("right", Gravity.RIGHT),
+                new Marklar("bottom", Gravity.BOTTOM)
         }) {
             if(containsString(parts, derp.name)) {
-                gravity |= derp.gravity;
+                gravity |= derp.value;
             }
         }
 

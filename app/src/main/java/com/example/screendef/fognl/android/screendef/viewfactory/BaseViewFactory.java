@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,6 +38,8 @@ public class BaseViewFactory implements ViewFactory {
             case "FrameLayout": return new FrameLayout(context);
             case "LinearLayout": return new LinearLayout(context);
             case "RelativeLayout": return new RelativeLayout(context);
+            case "ImageButton": return new ImageButton(context);
+            case "ImageView": return new ImageView(context);
 
             default: {
                 Log.w(TAG, "unknown type " + type);

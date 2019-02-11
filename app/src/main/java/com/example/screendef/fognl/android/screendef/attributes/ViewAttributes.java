@@ -1,11 +1,18 @@
 package com.example.screendef.fognl.android.screendef.attributes;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.screendef.fognl.android.screendef.Values;
+import com.example.screendef.fognl.android.screendef.ViewBuilder;
 import com.example.screendef.fognl.android.screendef.ViewUtils;
 
 import java.util.HashMap;
@@ -24,8 +31,34 @@ public class ViewAttributes<ViewType extends View> {
 
     public ViewAttributes() {
         applicators.put("background", new Applicator<View>() {
+            public void apply(Context context, final View view, Values attrs, String name) {
+                final String v = attrs.getString(name);
+
+                if(v.startsWith("http")) {
+                    ViewBuilder.getIcon(view.getContext(), v, new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            final BitmapDrawable bd = new BitmapDrawable(view.getResources(), resource);
+                            view.setBackground(bd);
+                        }
+                    });
+                } else {
+                    view.setBackgroundColor(ViewUtils.parseColor(v, 0));
+                }
+            }
+        });
+
+        applicators.put("clickable", new Applicator<View>() {
+            @Override
             public void apply(Context context, View view, Values attrs, String name) {
-                view.setBackgroundColor(ViewUtils.parseColor(attrs.getString(name)));
+                view.setClickable(attrs.getBoolean(name, true));
+            }
+        });
+
+        applicators.put("focusable", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setFocusable(attrs.getBoolean(name, true));
             }
         });
 
@@ -42,6 +75,56 @@ public class ViewAttributes<ViewType extends View> {
                 view.setMinimumWidth(attrs.getInt(name, 0));
             }
         });
+
+        applicators.put("alpha", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setAlpha(attrs.getFloat(name, 1f));
+            }
+        });
+
+        applicators.put("rotation", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setRotation(attrs.getFloat(name, 1f));
+            }
+        });
+
+        applicators.put("rotationX", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setRotationX(attrs.getFloat(name, 1f));
+            }
+        });
+
+        applicators.put("rotationY", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setRotationY(attrs.getFloat(name, 1f));
+            }
+        });
+
+        applicators.put("scaleX", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setScaleX(attrs.getFloat(name, 1f));
+            }
+        });
+
+        applicators.put("scaleY", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setScaleY(attrs.getFloat(name, 1f));
+            }
+        });
+
+        applicators.put("tag", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setTag(attrs.get(name));
+            }
+        });
+
 
         // TODO: And so on
     }

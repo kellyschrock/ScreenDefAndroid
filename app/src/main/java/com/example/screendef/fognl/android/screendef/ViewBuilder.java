@@ -1,11 +1,20 @@
 package com.example.screendef.fognl.android.screendef;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.example.screendef.fognl.android.screendef.attributes.EditTextAttributes;
+import com.example.screendef.fognl.android.screendef.attributes.ImageViewAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.LayoutAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.RadioGroupAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.SpinnerAttributes;
@@ -28,8 +37,10 @@ public class ViewBuilder {
 
     static {
         sAttributeProcessors.add(TextViewAttributes.class);
+        sAttributeProcessors.add(EditTextAttributes.class);
         sAttributeProcessors.add(RadioGroupAttributes.class);
         sAttributeProcessors.add(LayoutAttributes.class);
+        sAttributeProcessors.add(ImageViewAttributes.class);
         sAttributeProcessors.add(SpinnerAttributes.class);
     }
 
@@ -121,5 +132,27 @@ public class ViewBuilder {
         }
 
         return list;
+    }
+
+    public static void setImageViewIcon(ImageView img, String url) {
+        Glide.with(img.getContext())
+                .load(url).into(img);
+    }
+
+    public interface BitmapCallback {
+        void onBitmap(Bitmap bmp);
+    }
+
+    public static void getIcon(Context context, String url, final BitmapCallback callback) {
+        Glide.with(context).asBitmap().load(url).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                callback.onBitmap(resource);
+            }
+        });
+    }
+
+    public static void getIcon(Context context, String url, SimpleTarget<Bitmap> callback) {
+        Glide.with(context).asBitmap().load(url).into(callback);
     }
 }

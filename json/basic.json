@@ -21,12 +21,20 @@
 			"paddingBottom": "10",
 			"children": [
 				{
+					"type": "ImageView",
+					"layout_width": 64,
+					"layout_height": 64,
+					"layout_margin": 20,
+					"icon": "https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"
+				},
+				{
 					"type": "Button",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"text": "Click Me",
 					"onClick": "What do I do here",
-					"textAllCaps": false
+					"textAllCaps": false,
+					"alpha": 0.4
 				},
 				{
 					"type": "Button",
@@ -36,6 +44,15 @@
 					"text": "Or me",
 					"textAllCaps": true,
 					"textColor": "white"
+				},
+				{
+					"type": "EditText",
+					"layout_width": "wrap_content",
+					"layout_height": "wrap_content",
+					"minWidth": 300,
+					"inputType": "textCapWords",
+					"maxLength": 80,
+					"hint": "A hint"
 				},
 				{
 					"type": "SeekBar",
@@ -90,9 +107,7 @@
 							"layout_width": "wrap_content",
 							"layout_height": "wrap_content",
 							"text": "Radio 2",
-							"textStyle": "bold",
-							"textSize": "22",
-							"textColor": "white"
+							"textStyle": "bold"
 						}
 					]
 				}
