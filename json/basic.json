@@ -52,7 +52,8 @@
 				},
 				{
 					"type": "EditText",
-					"id": "edit_name",
+					"id": "edit_first_name",
+					"name": "first_name",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"minWidth": 300,
@@ -64,6 +65,7 @@
 				{
 					"type": "SeekBar",
 					"id": "seeker",
+					"name": "seeker_value",
 					"layout_width": "0",
 					"layout_height": "wrap_content",
 					"layout_weight": "0.6",
@@ -86,6 +88,7 @@
 				{
 					"type": "Spinner",
 					"id": "my_spinner",
+					"name": "selected_item",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"items": [
@@ -100,6 +103,7 @@
 				{
 					"type": "CheckBox",
 					"id": "my_check",
+					"name": "checked_out",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"text": "CHECK this out",
@@ -108,6 +112,7 @@
 				{
 					"type": "RadioGroup",
 					"id": "my_radio_group",
+					"name": "gender",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"layout_marginLeft": "20",
@@ -116,6 +121,7 @@
 						{
 							"type": "RadioButton",
 							"id": "rdo_one",
+							"name": "male",
 							"layout_width": "wrap_content",
 							"layout_height": "wrap_content",
 							"text": "Radio 1"
@@ -123,6 +129,7 @@
 						{
 							"type": "RadioButton",
 							"id": "rdo_two",
+							"name": "female",
 							"layout_width": "wrap_content",
 							"layout_height": "wrap_content",
 							"text": "Radio 2",
@@ -144,6 +151,7 @@
 				{
 					"type": "RecyclerView",
 					"id": "my_recycler",
+					"name": "selected_thing",
 					"layout_width": "match_parent",
 					"layout_height": "wrap_content",
 					"background": "black",

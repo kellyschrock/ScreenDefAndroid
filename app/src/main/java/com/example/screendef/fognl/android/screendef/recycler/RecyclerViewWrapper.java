@@ -8,7 +8,9 @@ import android.util.AttributeSet;
 
 public class RecyclerViewWrapper extends RecyclerView
     implements RecyclerAdapter.ItemListener {
+
     private RecyclerAdapter.ItemListener itemListener;
+    private RecyclerItem selectedItem;
 
     public RecyclerViewWrapper(@NonNull Context context) {
         super(context);
@@ -28,6 +30,9 @@ public class RecyclerViewWrapper extends RecyclerView
 
     @Override
     public void onItemSelected(int position, RecyclerItem item) {
+        selectedItem = item;
         if(itemListener != null) itemListener.onItemSelected(position, item);
     }
+
+    public RecyclerItem getSelectedItem() { return selectedItem; }
 }

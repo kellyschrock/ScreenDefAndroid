@@ -1,4 +1,5 @@
 <resources>
     <string name="tag_view_id">1</string>
     <string name="tag_view_tag">2</string>
+    <string name="tag_view_name">3</string>
 </resources>

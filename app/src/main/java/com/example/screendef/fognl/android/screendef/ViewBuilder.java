@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -29,6 +28,12 @@ import com.example.screendef.fognl.android.screendef.events.SeekBarEventAttacher
 import com.example.screendef.fognl.android.screendef.events.SpinnerEventAttacher;
 import com.example.screendef.fognl.android.screendef.events.ViewEventAttacher;
 import com.example.screendef.fognl.android.screendef.events.ViewEventListener;
+import com.example.screendef.fognl.android.screendef.values.CheckBoxGetter;
+import com.example.screendef.fognl.android.screendef.values.EditTextGetter;
+import com.example.screendef.fognl.android.screendef.values.ProgressBarGetter;
+import com.example.screendef.fognl.android.screendef.values.RadioGroupGetter;
+import com.example.screendef.fognl.android.screendef.values.SpinnerGetter;
+import com.example.screendef.fognl.android.screendef.values.ValueGetter;
 import com.example.screendef.fognl.android.screendef.viewfactory.BaseViewFactory;
 
 import java.util.ArrayList;
@@ -84,6 +89,7 @@ public class ViewBuilder {
     private final Set<ViewFactory> mViewFactories = new HashSet<>();
     private final Set<ViewEventListener> mViewEventListeners = new HashSet<>();
     private final Set<EventAttacher> mEventAttachers = new HashSet<>();
+    private final Set<ValueGetter> mValueGetters = new HashSet<>();
 
     private final Context mContext;
 
@@ -92,6 +98,7 @@ public class ViewBuilder {
         initAttributeProcessors();
         initViewFactories();
         initEventAttachers();
+        initValueGetters();
     }
 
     public ViewBuilder addAttributeProcessor(ViewAttributes type) {
@@ -124,6 +131,16 @@ public class ViewBuilder {
         return this;
     }
 
+    public ViewBuilder addValueGetter(ValueGetter getter) {
+        mValueGetters.add(getter);
+        return this;
+    }
+
+    public ViewBuilder removeValueGetter(ValueGetter getter) {
+        mValueGetters.remove(getter);
+        return this;
+    }
+
     public BuildResult buildViewFrom(Context context, ViewDef viewDef) throws ViewBuilderException {
         final Map<String, View> viewIds = new HashMap<>();
         final View view = doBuildViewFrom(context, viewDef, viewIds);
@@ -141,10 +158,20 @@ public class ViewBuilder {
     public Values makeMessageBody(BuildResult buildResult) {
         final Values result = new Values();
 
-        // TODO: Build a hierarchy of ViewGetters to extract values out of the controls here.
-        // Same pattern as with attributes; iterate through a list of getters. If a getter
-        // is applicable to a given view, have the getter extract the view's value and put it
-        // into the Values object it's using.
+        final Map<String, View> map = buildResult.getViewIds();
+        for(String id: map.keySet()) {
+            final View view = map.get(id);
+            if(view == null) continue;
+
+            final String name = (String)view.getTag(R.string.tag_view_name);
+            if(name == null) continue;
+
+            for(ValueGetter getter: mValueGetters) {
+                if(getter.appliesTo(view)) {
+                    getter.getValuesFrom(view, name, result);
+                }
+            }
+        }
 
         return result;
     }
@@ -255,6 +282,14 @@ public class ViewBuilder {
 
     void initViewFactories() {
         mViewFactories.add(new BaseViewFactory());
+    }
+
+    void initValueGetters() {
+        mValueGetters.add(new EditTextGetter());
+        mValueGetters.add(new CheckBoxGetter());
+        mValueGetters.add(new RadioGroupGetter());
+        mValueGetters.add(new ProgressBarGetter());
+        mValueGetters.add(new SpinnerGetter());
     }
 
     void initEventAttachers() {

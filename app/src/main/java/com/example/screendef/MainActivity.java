@@ -17,6 +17,7 @@ import com.example.screendef.fognl.android.screendef.attributes.RecyclerViewAttr
 import com.example.screendef.fognl.android.screendef.events.RecyclerViewEventAttacher;
 import com.example.screendef.fognl.android.screendef.events.ViewEventListener;
 import com.example.screendef.fognl.android.screendef.util.Streams;
+import com.example.screendef.fognl.android.screendef.values.RecyclerViewGetter;
 import com.example.screendef.fognl.android.screendef.viewfactory.RecyclerViewFactory;
 
 import org.json.JSONObject;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 .addViewFactory(new RecyclerViewFactory())
                 .addAttributeProcessor(new RecyclerViewAttributes())
                 .addEventAttacher(new RecyclerViewEventAttacher())
+                .addValueGetter(new RecyclerViewGetter())
                 .addViewEventListener(new ViewEventListener() {
                     @Override
                     public void onViewEvent(String viewId, String event, Values data) {

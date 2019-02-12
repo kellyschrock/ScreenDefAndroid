@@ -151,6 +151,13 @@ public class ViewAttributes<ViewType extends View> {
             }
         });
 
+        applicators.put("name", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setTag(R.string.tag_view_name, attrs.getString(name));
+            }
+        });
+
 
         // TODO: And so on
     }
