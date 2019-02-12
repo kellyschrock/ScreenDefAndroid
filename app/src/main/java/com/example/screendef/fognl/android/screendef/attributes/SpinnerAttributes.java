@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.example.screendef.fognl.android.screendef.SpinnerItem;
 import com.example.screendef.fognl.android.screendef.Values;
@@ -37,6 +38,14 @@ public class SpinnerAttributes extends ViewAttributes<Spinner> {
                     adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
                     view.setAdapter(adapter);
                 }
+            }
+        });
+
+        applicators.put("selection", new Applicator<Spinner>() {
+            @Override
+            public void apply(Context context, Spinner view, Values attrs, String name) {
+                final int sel = attrs.getInt(name, 0);
+                view.setSelection(sel);
             }
         });
     }
