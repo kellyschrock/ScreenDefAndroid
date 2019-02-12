@@ -45,6 +45,13 @@ public class RecyclerItemHolder extends RecyclerView.ViewHolder {
                 ViewBuilder.get().applyAttributes(itemView.getContext(), subtext, subStyle);
             }
         }
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemListener.onItemSelected(position, item);
+            }
+        });
     }
 
     void bind(int position, RecyclerItem item) {

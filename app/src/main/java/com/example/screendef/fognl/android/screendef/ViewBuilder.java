@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.screendef.R;
 import com.example.screendef.fognl.android.screendef.attributes.EditTextAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.ImageViewAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.LayoutAttributes;
@@ -19,6 +21,14 @@ import com.example.screendef.fognl.android.screendef.attributes.RadioGroupAttrib
 import com.example.screendef.fognl.android.screendef.attributes.SpinnerAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.TextViewAttributes;
 import com.example.screendef.fognl.android.screendef.attributes.ViewAttributes;
+import com.example.screendef.fognl.android.screendef.events.CheckBoxEventAttacher;
+import com.example.screendef.fognl.android.screendef.events.EditTextEventAttacher;
+import com.example.screendef.fognl.android.screendef.events.EventAttacher;
+import com.example.screendef.fognl.android.screendef.events.RadioGroupEventAttacher;
+import com.example.screendef.fognl.android.screendef.events.SeekBarEventAttacher;
+import com.example.screendef.fognl.android.screendef.events.SpinnerEventAttacher;
+import com.example.screendef.fognl.android.screendef.events.ViewEventAttacher;
+import com.example.screendef.fognl.android.screendef.events.ViewEventListener;
 import com.example.screendef.fognl.android.screendef.viewfactory.BaseViewFactory;
 
 import java.util.ArrayList;
@@ -52,6 +62,7 @@ public class ViewBuilder {
         public Map<String, View> getViewIds() {
             return viewIds;
         }
+        public boolean hasViewIds() { return (viewIds != null); }
 
         @Override
         public String toString() {
@@ -71,7 +82,17 @@ public class ViewBuilder {
 
     private final List<ViewAttributes> mAttributeProcessors = new ArrayList<>();
     private final Set<ViewFactory> mViewFactories = new HashSet<>();
-    private final Map<View, Values> mViewIds = new HashMap<>();
+    private final Set<ViewEventListener> mViewEventListeners = new HashSet<>();
+    private final Set<EventAttacher> mEventAttachers = new HashSet<>();
+
+    private final Context mContext;
+
+    private ViewBuilder(Context context) {
+        mContext = context;
+        initAttributeProcessors();
+        initViewFactories();
+        initEventAttachers();
+    }
 
     public ViewBuilder addAttributeProcessor(ViewAttributes type) {
         mAttributeProcessors.add(type);
@@ -83,18 +104,57 @@ public class ViewBuilder {
         return this;
     }
 
-    private final Context mContext;
-    private ViewBuilder(Context context) {
-        mContext = context;
-        initAttributeProcessors();
-        initViewFactories();
+    public ViewBuilder addViewEventListener(ViewEventListener listener) {
+        mViewEventListeners.add(listener);
+        return this;
+    }
+
+    public ViewBuilder removeViewEventListener(ViewEventListener listener) {
+        mViewEventListeners.remove(listener);
+        return this;
+    }
+
+    public ViewBuilder addEventAttacher(EventAttacher attacher) {
+        mEventAttachers.add(attacher);
+        return this;
+    }
+
+    public ViewBuilder removeEventAttacher(EventAttacher attacher) {
+        mEventAttachers.remove(attacher);
+        return this;
     }
 
     public BuildResult buildViewFrom(Context context, ViewDef viewDef) throws ViewBuilderException {
         final Map<String, View> viewIds = new HashMap<>();
         final View view = doBuildViewFrom(context, viewDef, viewIds);
 
+        for(String name: viewIds.keySet()) {
+            final View v = viewIds.get(name);
+            if(v != null) {
+                attachEventsTo(v);
+            }
+        }
+
         return new BuildResult(view, viewIds);
+    }
+
+    public Values makeMessageBody(BuildResult buildResult) {
+        final Values result = new Values();
+
+        // TODO: Build a hierarchy of ViewGetters to extract values out of the controls here.
+        // Same pattern as with attributes; iterate through a list of getters. If a getter
+        // is applicable to a given view, have the getter extract the view's value and put it
+        // into the Values object it's using.
+
+        return result;
+    }
+
+    void attachEventsTo(View view) {
+        for(EventAttacher attacher: mEventAttachers) {
+            if(attacher.appliesTo(view)) {
+                attacher.attachEventsTo(view, mViewEventListeners);
+            }
+        }
     }
 
     /** Given the specified ViewDef, hydrate it into a view hierarchy. */
@@ -195,5 +255,14 @@ public class ViewBuilder {
 
     void initViewFactories() {
         mViewFactories.add(new BaseViewFactory());
+    }
+
+    void initEventAttachers() {
+        mEventAttachers.add(new ViewEventAttacher());
+        mEventAttachers.add(new SeekBarEventAttacher());
+        mEventAttachers.add(new SpinnerEventAttacher());
+        mEventAttachers.add(new CheckBoxEventAttacher());
+        mEventAttachers.add(new RadioGroupEventAttacher());
+        mEventAttachers.add(new EditTextEventAttacher());
     }
 }

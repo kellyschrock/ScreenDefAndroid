@@ -132,6 +132,13 @@ public class ViewAttributes<ViewType extends View> {
             }
         });
 
+        applicators.put("enabled", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setEnabled(attrs.getBoolean(name, true));
+            }
+        });
+
         applicators.put("id", new Applicator<View>() {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {
@@ -170,6 +177,8 @@ public class ViewAttributes<ViewType extends View> {
                 }
             }
         }
+
+        view.setTag(attrs);
 
         Log.v(TAG, String.format("viewIds=%s", mViewIds));
     }

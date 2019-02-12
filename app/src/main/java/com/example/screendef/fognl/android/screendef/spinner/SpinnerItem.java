@@ -1,4 +1,4 @@
-package com.example.screendef.fognl.android.screendef;
+package com.example.screendef.fognl.android.screendef.spinner;
 
 public class SpinnerItem {
     private final String id;

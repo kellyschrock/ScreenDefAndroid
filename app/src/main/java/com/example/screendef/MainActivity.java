@@ -14,6 +14,8 @@ import com.example.screendef.fognl.android.screendef.Values;
 import com.example.screendef.fognl.android.screendef.ViewBuilder;
 import com.example.screendef.fognl.android.screendef.ViewDef;
 import com.example.screendef.fognl.android.screendef.attributes.RecyclerViewAttributes;
+import com.example.screendef.fognl.android.screendef.events.RecyclerViewEventAttacher;
+import com.example.screendef.fognl.android.screendef.events.ViewEventListener;
 import com.example.screendef.fognl.android.screendef.util.Streams;
 import com.example.screendef.fognl.android.screendef.viewfactory.RecyclerViewFactory;
 
@@ -22,7 +24,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     static final String TAG = MainActivity.class.getSimpleName();
@@ -56,6 +57,28 @@ public class MainActivity extends AppCompatActivity {
                 .init(getApplicationContext())
                 .addViewFactory(new RecyclerViewFactory())
                 .addAttributeProcessor(new RecyclerViewAttributes())
+                .addEventAttacher(new RecyclerViewEventAttacher())
+                .addViewEventListener(new ViewEventListener() {
+                    @Override
+                    public void onViewEvent(String viewId, String event, Values data) {
+                        Log.v(TAG, String.format("onViewEvent(%s, %s, %s)", viewId, event, data));
+
+                        // Decide what to do based on what was messed with
+                        switch(viewId) {
+                            case "my_button": {
+                                switch(event) {
+                                    case "on_click": {
+                                        final Values body = ViewBuilder.get().makeMessageBody(mBuildResult);
+                                        Log.v(TAG, String.format("body=%s", body));
+                                        break;
+                                    }
+                                }
+
+                                break;
+                            }
+                        }
+                    }
+                })
                 ;
 
         checkFileReadPermissions();
@@ -78,26 +101,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Map<String, View> mViewIds = null;
+    private ViewBuilder.BuildResult mBuildResult;
 
     void doTest() {
         try {
+            // Get some data from an external source
             final File file = new File(Const.BASE_DIR, "basic.json");
             final String content = Streams.copyAndClose(new FileInputStream(file), new ByteArrayOutputStream()).toString();
+
+            // Parse it into a ViewDef
             final JSONObject jo = new JSONObject(content);
-
             final ViewDef def = ViewDef.populate(new ViewDef(), jo);
-            Log.v(TAG, "def=" + def);
+//            Log.v(TAG, "def=" + def);
 
-            final ViewBuilder.BuildResult buildResult = ViewBuilder.get().buildViewFrom(this, def);
-            if(buildResult != null) {
+            mBuildResult = ViewBuilder.get().buildViewFrom(this, def);
+            if(mBuildResult != null) {
                 containerView.removeAllViews();
-                final View view = buildResult.getView();
+                final View view = mBuildResult.getView();
                 containerView.addView(view, def.getLayoutParams(view, containerView));
 
-                mViewIds = buildResult.getViewIds();
-                Log.v(TAG, String.format("viewIds=%s", buildResult.getViewIds()));
-                findViewById(R.id.btn_update_values).setEnabled(mViewIds != null);
+                findViewById(R.id.btn_update_values).setEnabled(mBuildResult.hasViewIds());
             }
 
 
@@ -114,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         final Values my_button = new Values();
         my_button.put("text", "I just updated");
         my_button.put("textColor", "white");
+        my_button.put("enabled", "false");
 
         final Values edit_name = new Values();
         edit_name.put("hint", "Your name here");
@@ -124,9 +148,9 @@ public class MainActivity extends AppCompatActivity {
         map.put("seeker", seeker);
         map.put("edit_name", edit_name);
 
-        for(String key: map.keySet()) {
+        for(String key: mBuildResult.getViewIds().keySet()) {
             final Values attrs = map.getObject(key, null);
-            final View view = mViewIds.get(key);
+            final View view = mBuildResult.getViewIds().get(key);
             if(view != null) {
                 ViewBuilder.get().applyAttributes(this, view, attrs);
             }

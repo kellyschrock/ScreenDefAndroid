@@ -11,6 +11,11 @@ public class Values extends HashMap<String, Object> {
         return (null != get(name));
     }
 
+    public Values put(String name, Object value) {
+        super.put(name, value);
+        return this;
+    }
+
     public String getString(String name) {
         Object v = get(name);
         return (v != null)? v.toString(): null;

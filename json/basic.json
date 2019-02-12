@@ -32,22 +32,23 @@
 					"id": "my_button",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
-					"text": "Naked button",
-					"onClick": "What do I do here",
+					"text": "Click ME!",
 					"textAllCaps": false,
 					"textColor": "yellow",
 					"background": "@null",
-					"tag": "Here's some data in a tag"
+					"tag": "Here's some data in a tag",
+					"on_click": { "action": "send", "value": "some_worker_msg" }
 				},
 				{
 					"type": "Button",
+					"id": "btn_or_click_me",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"layout_marginLeft": "20",
 					"text": "Or me",
 					"textAllCaps": true,
 					"textColor": "white",
-					"alpha": 0.4
+					"on_click": { "action": "send", "value": "some_other_msg" }
 				},
 				{
 					"type": "EditText",
@@ -57,17 +58,19 @@
 					"minWidth": 300,
 					"inputType": "textCapWords",
 					"maxLength": 80,
-					"hint": "A hint"
+					"hint": "A hint",
+					"on_text_changed": {"0": 0}
 				},
 				{
-					"type": "ProgressBar",
+					"type": "SeekBar",
 					"id": "seeker",
 					"layout_width": "0",
 					"layout_height": "wrap_content",
 					"layout_weight": "0.6",
 					"max": 100,
 					"progress": 20,
-					"indeterminate": false
+					"indeterminate": false,
+					"on_progress": { "action": "whatever" }
 				}
 			]
 		},
@@ -82,6 +85,7 @@
 			"children": [
 				{
 					"type": "Spinner",
+					"id": "my_spinner",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"items": [
@@ -90,16 +94,20 @@
 						{ "id": "item3", "text": "Item 3" },
 						{ "id": "item4", "text": "Item 4" },
 						{ "id": "item5", "text": "Item 5" }
-					]
+					],
+					"on_item_selected": { "0": 0 }
 				},
 				{
 					"type": "CheckBox",
+					"id": "my_check",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
-					"text": "CHECK this out"
+					"text": "CHECK this out",
+					"on_check": { "0" : 0 }
 				},
 				{
 					"type": "RadioGroup",
+					"id": "my_radio_group",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"layout_marginLeft": "20",
@@ -107,18 +115,21 @@
 					"children": [
 						{
 							"type": "RadioButton",
+							"id": "rdo_one",
 							"layout_width": "wrap_content",
 							"layout_height": "wrap_content",
 							"text": "Radio 1"
 						},
 						{
 							"type": "RadioButton",
+							"id": "rdo_two",
 							"layout_width": "wrap_content",
 							"layout_height": "wrap_content",
 							"text": "Radio 2",
 							"textStyle": "bold"
 						}
-					]
+					],
+					"on_check": {"0": 0}
 				}
 			]
 		},
@@ -132,6 +143,7 @@
 			"children": [
 				{
 					"type": "RecyclerView",
+					"id": "my_recycler",
 					"layout_width": "match_parent",
 					"layout_height": "wrap_content",
 					"background": "black",
@@ -157,7 +169,8 @@
 							{ "id": "item5", "title": "Title 5", "subtitle": "sub-title 5" },
 							{ "id": "item6", "title": "Title 6", "subtitle": "sub-title 6" }
 						]
-					}
+					},
+					"on_item_selected": {"0": 0}
 				}
 			]
 		}

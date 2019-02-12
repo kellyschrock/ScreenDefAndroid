@@ -4,9 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
-import com.example.screendef.fognl.android.screendef.SpinnerItem;
+import com.example.screendef.fognl.android.screendef.spinner.SpinnerItem;
 import com.example.screendef.fognl.android.screendef.Values;
 
 import java.util.ArrayList;
