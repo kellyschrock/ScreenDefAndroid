@@ -20,6 +20,7 @@ import com.example.screendef.fognl.android.screendef.util.Streams;
 import com.example.screendef.fognl.android.screendef.values.RecyclerViewGetter;
 import com.example.screendef.fognl.android.screendef.viewfactory.RecyclerViewFactory;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -72,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
                                     case "on_click": {
                                         final Values body = ViewBuilder.get().makeMessageBody(mBuildResult);
                                         Log.v(TAG, String.format("body=%s", body));
+
+                                        try {
+                                            final JSONObject jo = Values.populate(new JSONObject(), body);
+                                            Log.v(TAG, String.format("jo=%s", jo));
+                                        } catch(JSONException ex) {
+                                            Log.e(TAG, ex.getMessage(), ex);
+                                        }
+
                                         break;
                                     }
                                 }

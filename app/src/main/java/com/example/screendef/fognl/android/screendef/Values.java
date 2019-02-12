@@ -1,8 +1,43 @@
 package com.example.screendef.fognl.android.screendef;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.List;
 
 public class Values extends HashMap<String, Object> {
+    public static JSONObject populate(JSONObject jo, Values values) throws JSONException {
+
+        for(String key: values.keySet()) {
+            final Object value = values.get(key);
+
+            if(value instanceof Values) {
+                final JSONObject joItem = populate(new JSONObject(), (Values)value);
+                jo.put(key, joItem);
+            } else if(value instanceof List) {
+                final JSONArray array = new JSONArray();
+
+                final List list = (List)value;
+                for(Object item: list) {
+                    if(value instanceof Values) {
+                        final JSONObject joItem = populate(new JSONObject(), (Values)item);
+                        array.put(joItem);
+                    } else {
+                        array.put(value);
+                    }
+                }
+
+                jo.put(key, array);
+            } else {
+                jo.put(key, value);
+            }
+        }
+
+        return jo;
+    }
+
     public Values() {
         super();
     }
