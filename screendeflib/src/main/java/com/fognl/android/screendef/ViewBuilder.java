@@ -28,6 +28,7 @@ import com.fognl.android.screendef.events.SeekBarEventAttacher;
 import com.fognl.android.screendef.events.SpinnerEventAttacher;
 import com.fognl.android.screendef.events.ViewEventAttacher;
 import com.fognl.android.screendef.events.ViewEventListener;
+import com.fognl.android.screendef.module.ViewBuilderModule;
 import com.fognl.android.screendef.values.CheckBoxGetter;
 import com.fognl.android.screendef.values.EditTextGetter;
 import com.fognl.android.screendef.values.ProgressBarGetter;
@@ -101,18 +102,26 @@ public class ViewBuilder {
         initValueGetters();
     }
 
+    public ViewBuilder addModule(ViewBuilderModule module) {
+        addAttributeProcessor(module.getAttributeProcessor());
+        addEventAttacher(module.getEventAttacher());
+        addValueGetter(module.getValueGetter());
+        addViewFactory(module.getViewFactory());
+        return this;
+    }
+
     public ViewBuilder addAttributeProcessor(ViewAttributes type) {
-        mAttributeProcessors.add(type);
+        if(type != null) mAttributeProcessors.add(type);
         return this;
     }
 
     public ViewBuilder addViewFactory(ViewFactory factory) {
-        mViewFactories.add(factory);
+        if(factory != null) mViewFactories.add(factory);
         return this;
     }
 
     public ViewBuilder addViewEventListener(ViewEventListener listener) {
-        mViewEventListeners.add(listener);
+        if(listener != null) mViewEventListeners.add(listener);
         return this;
     }
 
@@ -122,7 +131,7 @@ public class ViewBuilder {
     }
 
     public ViewBuilder addEventAttacher(EventAttacher attacher) {
-        mEventAttachers.add(attacher);
+        if(attacher != null) mEventAttachers.add(attacher);
         return this;
     }
 
@@ -132,7 +141,7 @@ public class ViewBuilder {
     }
 
     public ViewBuilder addValueGetter(ValueGetter getter) {
-        mValueGetters.add(getter);
+        if(getter != null) mValueGetters.add(getter);
         return this;
     }
 

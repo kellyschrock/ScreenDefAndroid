@@ -13,9 +13,10 @@ import android.widget.Toast;
 import com.fognl.android.screendef.Values;
 import com.fognl.android.screendef.ViewBuilder;
 import com.fognl.android.screendef.ViewDef;
-import com.fognl.android.screendef.attributes.RecyclerViewAttributes;
-import com.fognl.android.screendef.events.RecyclerViewEventAttacher;
+import com.fognl.android.screendef.recycler.RecyclerViewAttributes;
+import com.fognl.android.screendef.recycler.RecyclerViewEventAttacher;
 import com.fognl.android.screendef.events.ViewEventListener;
+import com.fognl.android.screendef.recycler.RecyclerViewModule;
 import com.fognl.android.screendef.util.Streams;
 import com.fognl.android.screendef.values.RecyclerViewGetter;
 import com.fognl.android.screendef.viewfactory.RecyclerViewFactory;
@@ -57,10 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewBuilder
                 .init(getApplicationContext())
-                .addViewFactory(new RecyclerViewFactory())
-                .addAttributeProcessor(new RecyclerViewAttributes())
-                .addEventAttacher(new RecyclerViewEventAttacher())
-                .addValueGetter(new RecyclerViewGetter())
+                .addModule(new RecyclerViewModule())
                 .addViewEventListener(new ViewEventListener() {
                     @Override
                     public void onViewEvent(String viewId, String event, Values data) {

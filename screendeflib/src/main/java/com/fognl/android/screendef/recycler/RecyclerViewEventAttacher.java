@@ -1,9 +1,11 @@
-package com.fognl.android.screendef.events;
+package com.fognl.android.screendef.recycler;
 
 import android.view.View;
 
 import com.fognl.android.screendef.R;
 import com.fognl.android.screendef.Values;
+import com.fognl.android.screendef.events.EventAttacher;
+import com.fognl.android.screendef.events.ViewEventListener;
 import com.fognl.android.screendef.recycler.RecyclerAdapter;
 import com.fognl.android.screendef.recycler.RecyclerItem;
 import com.fognl.android.screendef.recycler.RecyclerViewWrapper;

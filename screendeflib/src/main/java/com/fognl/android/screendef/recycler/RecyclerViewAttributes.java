@@ -1,10 +1,11 @@
-package com.fognl.android.screendef.attributes;
+package com.fognl.android.screendef.recycler;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.fognl.android.screendef.Values;
+import com.fognl.android.screendef.attributes.ViewAttributes;
 import com.fognl.android.screendef.recycler.RecyclerAdapter;
 import com.fognl.android.screendef.recycler.RecyclerItem;
 import com.fognl.android.screendef.recycler.RecyclerViewWrapper;
