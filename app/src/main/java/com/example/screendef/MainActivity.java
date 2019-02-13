@@ -10,15 +10,15 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.example.screendef.fognl.android.screendef.Values;
-import com.example.screendef.fognl.android.screendef.ViewBuilder;
-import com.example.screendef.fognl.android.screendef.ViewDef;
-import com.example.screendef.fognl.android.screendef.attributes.RecyclerViewAttributes;
-import com.example.screendef.fognl.android.screendef.events.RecyclerViewEventAttacher;
-import com.example.screendef.fognl.android.screendef.events.ViewEventListener;
-import com.example.screendef.fognl.android.screendef.util.Streams;
-import com.example.screendef.fognl.android.screendef.values.RecyclerViewGetter;
-import com.example.screendef.fognl.android.screendef.viewfactory.RecyclerViewFactory;
+import com.fognl.android.screendef.Values;
+import com.fognl.android.screendef.ViewBuilder;
+import com.fognl.android.screendef.ViewDef;
+import com.fognl.android.screendef.attributes.RecyclerViewAttributes;
+import com.fognl.android.screendef.events.RecyclerViewEventAttacher;
+import com.fognl.android.screendef.events.ViewEventListener;
+import com.fognl.android.screendef.util.Streams;
+import com.fognl.android.screendef.values.RecyclerViewGetter;
+import com.fognl.android.screendef.viewfactory.RecyclerViewFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         for(String key: mBuildResult.getViewIds().keySet()) {
             final Values attrs = map.getObject(key, null);
             final View view = mBuildResult.getViewIds().get(key);
-            if(view != null) {
+            if(view != null && attrs != null) {
                 ViewBuilder.get().applyAttributes(this, view, attrs);
             }
         }
