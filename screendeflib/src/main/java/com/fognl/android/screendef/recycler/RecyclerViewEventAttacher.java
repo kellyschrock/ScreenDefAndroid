@@ -28,6 +28,7 @@ public class RecyclerViewEventAttacher implements EventAttacher<RecyclerViewWrap
         if(on_item_selected == null) return;
 
         final String viewId = (String)view.getTag(R.string.tag_view_id);
+        final String screenId = (String)view.getTag(R.string.tag_view_screen);
 
         view.setItemListener(new RecyclerAdapter.ItemListener() {
             @Override
@@ -37,7 +38,7 @@ public class RecyclerViewEventAttacher implements EventAttacher<RecyclerViewWrap
                 on_item_selected.put("position", position);
 
                 for(ViewEventListener listener: listeners) {
-                    listener.onViewEvent(viewId, EVT_ON_ITEM_SELECTED, on_item_selected);
+                    listener.onViewEvent(screenId, viewId, EVT_ON_ITEM_SELECTED, on_item_selected);
                 }
             }
         });

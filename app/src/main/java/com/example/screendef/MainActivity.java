@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 .addModule(new RecyclerViewModule())
                 .addViewEventListener(new ViewEventListener() {
                     @Override
-                    public void onViewEvent(String viewId, String event, Values data) {
-                        Log.v(TAG, String.format("onViewEvent(%s, %s, %s)", viewId, event, data));
+                    public void onViewEvent(String screenId, String viewId, String event, Values data) {
+                        Log.v(TAG, String.format("onViewEvent(%s, %s, %s, %s)", screenId, viewId, event, data));
 
                         // Decide what to do based on what was messed with
                         switch(viewId) {
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             final ViewDef def = ViewDef.populate(new ViewDef(), jo);
 //            Log.v(TAG, "def=" + def);
 
-            mBuildResult = ViewBuilder.get().buildViewFrom(this, def);
+            mBuildResult = ViewBuilder.get().buildViewFrom(this, "my_screen", def);
             if(mBuildResult != null) {
                 containerView.removeAllViews();
                 final View view = mBuildResult.getView();

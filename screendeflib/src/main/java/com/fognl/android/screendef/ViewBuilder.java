@@ -150,9 +150,9 @@ public class ViewBuilder {
         return this;
     }
 
-    public BuildResult buildViewFrom(Context context, ViewDef viewDef) throws ViewBuilderException {
+    public BuildResult buildViewFrom(Context context, String screenId, ViewDef viewDef) throws ViewBuilderException {
         final Map<String, View> viewIds = new HashMap<>();
-        final View view = doBuildViewFrom(context, viewDef, viewIds);
+        final View view = doBuildViewFrom(context, screenId, viewDef, viewIds);
 
         for(String name: viewIds.keySet()) {
             final View v = viewIds.get(name);
@@ -194,18 +194,21 @@ public class ViewBuilder {
     }
 
     /** Given the specified ViewDef, hydrate it into a view hierarchy. */
-    View doBuildViewFrom(Context context, ViewDef viewDef, Map<String, View> viewIds) throws ViewBuilderException {
+    View doBuildViewFrom(Context context, String screenId, ViewDef viewDef, Map<String, View> viewIds) throws ViewBuilderException {
         // Find a factory for this view type
         final View view = instantiateViewFrom(context, viewDef);
 
         if(view != null) {
+            view.setTag(R.string.tag_view_screen, screenId);
             applyAttributesWithIds(context, view, viewDef, viewIds);
 
             if(viewDef.hasChildren()) {
                 for(ViewDef childDef: viewDef.getChildren()) {
-                    final View child = doBuildViewFrom(context, childDef, viewIds);
+                    final View child = doBuildViewFrom(context, screenId, childDef, viewIds);
 
                     if(child != null) {
+                        child.setTag(R.string.tag_view_screen, screenId);
+
                         applyAttributesWithIds(context, child, childDef, viewIds);
 
                         if(view instanceof ViewGroup) {
@@ -240,6 +243,7 @@ public class ViewBuilder {
 
     void applyAttributesWithIds(Context context, View view, ViewDef viewDef, Map<String, View> viewIds) {
         for(ViewAttributes viewAttributes: findApplicableAttributesFor(view, viewIds)) {
+//            Log.v(TAG, String.format("%s applies to %s", viewAttributes.getClass().getSimpleName(), view.getClass().getSimpleName()));
             viewAttributes.applyTo(context, view, viewDef.attrs);
         }
     }

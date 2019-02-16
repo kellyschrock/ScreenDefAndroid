@@ -30,9 +30,10 @@ public class CheckBoxEventAttacher implements EventAttacher<CheckBox> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 on_check.put("checked", isChecked);
+                final String screenId = (String)buttonView.getTag(R.string.tag_view_screen);
 
                 for(ViewEventListener listener: listeners) {
-                    listener.onViewEvent(viewId, EVT_ON_CHECK, on_check);
+                    listener.onViewEvent(screenId, viewId, EVT_ON_CHECK, on_check);
                 }
             }
         });

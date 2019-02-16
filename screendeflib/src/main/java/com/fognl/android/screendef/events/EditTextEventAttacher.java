@@ -33,12 +33,13 @@ public class EditTextEventAttacher implements EventAttacher<EditText> {
 
             @Override
             public void afterTextChanged(Editable s) {
+                final String screenId = (String)view.getTag(R.string.tag_view_screen);
                 final String text = view.getText().toString();
 
                 on_text_changed.put("text", text);
 
                 for(ViewEventListener listener: listeners) {
-                    listener.onViewEvent(viewId, EVT_ON_TEXT_CHANGED, on_text_changed);
+                    listener.onViewEvent(screenId, viewId, EVT_ON_TEXT_CHANGED, on_text_changed);
                 }
             }
         });

@@ -23,46 +23,6 @@ public class LayoutAttributes extends ViewAttributes<ViewGroup> {
                 ViewUtils.callIntSetter(view, "setOrientation", ViewUtils.toLinearOrientation(attrs.getString(name)));
             }
         });
-
-        applicators.put("padding", new Applicator<ViewGroup>() {
-            @Override
-            public void apply(Context context, ViewGroup view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
-                view.setPadding(padding, padding, padding, padding);
-            }
-        });
-
-        applicators.put("paddingLeft", new Applicator<ViewGroup>() {
-            @Override
-            public void apply(Context context, ViewGroup view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
-                view.setPadding(padding, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
-            }
-        });
-
-        applicators.put("paddingRight", new Applicator<ViewGroup>() {
-            @Override
-            public void apply(Context context, ViewGroup view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
-                view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), padding, view.getPaddingBottom());
-            }
-        });
-
-        applicators.put("paddingTop", new Applicator<ViewGroup>() {
-            @Override
-            public void apply(Context context, ViewGroup view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
-                view.setPadding(view.getPaddingLeft(), padding, view.getPaddingRight(), view.getPaddingBottom());
-            }
-        });
-
-        applicators.put("paddingBottom", new Applicator<ViewGroup>() {
-            @Override
-            public void apply(Context context, ViewGroup view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
-                view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), padding);
-            }
-        });
     }
 
     @Override

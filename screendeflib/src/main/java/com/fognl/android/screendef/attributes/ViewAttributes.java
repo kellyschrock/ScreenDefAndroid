@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -122,6 +123,46 @@ public class ViewAttributes<ViewType extends View> {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {
                 view.setScaleY(attrs.getFloat(name, 1f));
+            }
+        });
+
+        applicators.put("padding", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
+                view.setPadding(padding, padding, padding, padding);
+            }
+        });
+
+        applicators.put("paddingLeft", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
+                view.setPadding(padding, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+            }
+        });
+
+        applicators.put("paddingRight", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
+                view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), padding, view.getPaddingBottom());
+            }
+        });
+
+        applicators.put("paddingTop", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
+                view.setPadding(view.getPaddingLeft(), padding, view.getPaddingRight(), view.getPaddingBottom());
+            }
+        });
+
+        applicators.put("paddingBottom", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                final int padding = attrs.getInt(name, 0);
+                view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), padding);
             }
         });
 

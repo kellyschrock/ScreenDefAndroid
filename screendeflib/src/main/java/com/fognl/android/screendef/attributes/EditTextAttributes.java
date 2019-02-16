@@ -1,6 +1,7 @@
 package com.fognl.android.screendef.attributes;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
@@ -36,6 +37,13 @@ public class EditTextAttributes extends ViewAttributes<TextView> {
             }
         });
 
+        applicators.put("textColorHint", new Applicator<EditText>() {
+            @Override
+            public void apply(Context context, EditText view, Values attrs, String name) {
+                view.setHintTextColor(ViewUtils.parseColor(attrs.getString(name), Color.WHITE));
+            }
+        });
+
         applicators.put("inputType", new Applicator<EditText>() {
             @Override
             public void apply(Context context, EditText view, Values attrs, String name) {
@@ -49,6 +57,8 @@ public class EditTextAttributes extends ViewAttributes<TextView> {
                 view.setFilters(new InputFilter[] { new InputFilter.LengthFilter(attrs.getInt(name, 100))});
             }
         });
+
+        // TODO: Do imeOptions at some point
     }
 
     @Override

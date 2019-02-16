@@ -30,9 +30,10 @@ public class SeekBarEventAttacher implements EventAttacher<SeekBar> {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 on_progress.put("value", progress);
                 on_progress.put("from_user", fromUser);
+                final String screenId = (String)seekBar.getTag(R.string.tag_view_screen);
 
                 for(ViewEventListener listener: listeners) {
-                    listener.onViewEvent(viewId, EVT_ON_PROGRESS, on_progress);
+                    listener.onViewEvent(screenId, viewId, EVT_ON_PROGRESS, on_progress);
                 }
             }
 
