@@ -28,6 +28,8 @@ public class BaseViewFactory implements ViewFactory {
     @Override
     public View instantiateViewFrom(Context context, String type, Map<String, Object> attrs) {
         switch (type) {
+            case "View":
+            case "Space": return new View(context);
             case "Spinner": return new Spinner(context);
             case "TextView": return new TextView(context);
             case "EditText": return new EditText(context);
