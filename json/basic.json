@@ -56,6 +56,7 @@
 					"name": "first_name",
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
+					"layout_marginLeft": 150,
 					"minWidth": 300,
 					"inputType": "textCapWords",
 					"maxLength": 80,

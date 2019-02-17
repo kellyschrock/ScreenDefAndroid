@@ -2,6 +2,7 @@ package com.fognl.android.screendef;
 
 import android.graphics.Color;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -97,6 +98,19 @@ public class ViewUtils {
         return false;
     }
 
+    public static TextUtils.TruncateAt toTruncateAt(String type) {
+        if(type != null) {
+            switch(type) {
+                case "middle": return TextUtils.TruncateAt.MIDDLE;
+                case "start": return TextUtils.TruncateAt.START;
+                case "marquee": return TextUtils.TruncateAt.MARQUEE;
+                default: return TextUtils.TruncateAt.END;
+            }
+        }
+
+        return TextUtils.TruncateAt.END;
+    }
+
     public static int toGravity(String grav) {
         int gravity = Gravity.NO_GRAVITY;
 
@@ -122,11 +136,11 @@ public class ViewUtils {
     public static void setGravities(Values attrs, View view, ViewGroup.LayoutParams lp) {
         try {
             if(attrs.containsKey("layout_gravity")) {
-                setFieldValue(lp, "gravity", new Integer[] {toGravity(attrs.get("layout_gravity").toString())} );
+                setFieldValue(lp, "gravity", new Integer[] {toGravity(attrs.getString("layout_gravity"))} );
             }
 
             if(attrs.containsKey("gravity")) {
-                callIntSetter(view, "setGravity", toGravity(attrs.get("gravity").toString()) );
+                callIntSetter(view, "setGravity", toGravity(attrs.getString("gravity")) );
             }
 
         } catch(Throwable ex) {
@@ -137,7 +151,7 @@ public class ViewUtils {
     public static void setWeights(Values attrs, ViewGroup.LayoutParams lp) {
         try {
             if(attrs.containsKey("layout_weight")) {
-                ((LinearLayout.LayoutParams)lp).weight = Float.valueOf(attrs.get("layout_weight").toString());
+                ((LinearLayout.LayoutParams)lp).weight = Float.valueOf(attrs.getString("layout_weight"));
             }
         } catch(Throwable ex) {
             Log.e(TAG, ex.getMessage(), ex);
@@ -149,24 +163,24 @@ public class ViewUtils {
             ViewGroup.MarginLayoutParams mp = (ViewGroup.MarginLayoutParams)lp;
 
             if(attrs.containsKey("layout_margin")) {
-                int margin = Integer.valueOf((String)attrs.get("layout_margin"));
+                final int margin = attrs.getInt("layout_margin", 0);
                 mp.leftMargin = mp.rightMargin = mp.topMargin = mp.bottomMargin = margin;
             }
 
             if(attrs.containsKey("layout_marginTop")) {
-                mp.topMargin = Integer.valueOf((String)attrs.get("layout_marginTop"));
+                mp.topMargin = attrs.getInt("layout_marginTop", 0);
             }
 
             if(attrs.containsKey("layout_marginTop")) {
-                mp.bottomMargin = Integer.valueOf((String)attrs.get("layout_marginBottom"));
+                mp.bottomMargin = attrs.getInt("layout_marginBottom", 0);
             }
 
             if(attrs.containsKey("layout_marginLeft")) {
-                mp.leftMargin = Integer.valueOf((String)attrs.get("layout_marginLeft"));
+                mp.leftMargin = attrs.getInt("layout_marginLeft", 0);
             }
 
             if(attrs.containsKey("layout_marginRight")) {
-                mp.rightMargin = Integer.valueOf((String)attrs.get("layout_marginRight"));
+                mp.rightMargin = attrs.getInt("layout_marginRight", 0);
             }
         }
     }
