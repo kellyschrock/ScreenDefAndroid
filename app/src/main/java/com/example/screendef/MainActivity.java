@@ -59,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
         ViewBuilder
                 .init(getApplicationContext())
                 .addModule(new RecyclerViewModule())
+                .setImageUrlCallback(new ViewBuilder.ImageUrlCallback() {
+                    @Override
+                    public String fixImageUrl(String url) {
+                        String output = url;
+
+                        if(url.startsWith("$(img)")) {
+                            output = String.format("http://192.168.1.56:3000/ui/image%s", url.substring("$(img)".length()));
+                        }
+
+                        return output;
+                    }
+                })
                 .addViewEventListener(new ViewEventListener() {
                     @Override
                     public void onViewEvent(String screenId, String viewId, String event, Values data) {
@@ -121,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
             // Parse it into a ViewDef
             final JSONObject jo = new JSONObject(content);
             final ViewDef def = ViewDef.populate(new ViewDef(), jo);
-//            Log.v(TAG, "def=" + def);
 
             mBuildResult = ViewBuilder.get().buildViewFrom(this, "my_screen", def);
             if(mBuildResult != null) {

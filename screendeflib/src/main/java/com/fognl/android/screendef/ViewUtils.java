@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
@@ -111,6 +112,31 @@ public class ViewUtils {
         return TextUtils.TruncateAt.END;
     }
 
+    public static ImageView.ScaleType toScaleType(String input) {
+        ImageView.ScaleType result = ImageView.ScaleType.CENTER;
+
+        final String[] names = new String[] {
+                "center", "centerCrop", "centerInside",
+                "fitCenter", "fitEnd", "fitStart", "fitXY",
+                "matrix"
+        };
+
+        final ImageView.ScaleType[] types = new ImageView.ScaleType[] {
+                ImageView.ScaleType.CENTER, ImageView.ScaleType.CENTER_CROP, ImageView.ScaleType.CENTER_INSIDE,
+                ImageView.ScaleType.FIT_CENTER, ImageView.ScaleType.FIT_END, ImageView.ScaleType.FIT_START, ImageView.ScaleType.FIT_XY,
+                ImageView.ScaleType.MATRIX
+        };
+
+        for(int i = 0; i < names.length; ++i) {
+            if(input.equals(names[i])) {
+                result = types[i];
+                break;
+            }
+        }
+
+        return result;
+    }
+
     public static int toGravity(String grav) {
         int gravity = Gravity.NO_GRAVITY;
 
@@ -136,7 +162,7 @@ public class ViewUtils {
     public static void setGravities(Values attrs, View view, ViewGroup.LayoutParams lp) {
         try {
             if(attrs.containsKey("layout_gravity")) {
-                setFieldValue(lp, "gravity", new Integer[] {toGravity(attrs.getString("layout_gravity"))} );
+                setFieldValue(lp, "gravity", toGravity(attrs.getString("layout_gravity")) );
             }
 
             if(attrs.containsKey("gravity")) {

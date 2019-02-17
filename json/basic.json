@@ -22,10 +22,9 @@
 			"children": [
 				{
 					"type": "ImageView",
-					"layout_width": 64,
-					"layout_height": 64,
-					"layout_margin": 20,
-					"icon": "https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"
+					"layout_width": "wrap_content",
+					"layout_height": "wrap_content",
+					"icon": "$(img)/test_worker/quad.png"
 				},
 				{
 					"type": "Button",

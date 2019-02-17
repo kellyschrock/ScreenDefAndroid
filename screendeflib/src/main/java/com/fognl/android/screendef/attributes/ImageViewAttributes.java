@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.fognl.android.screendef.Values;
 import com.fognl.android.screendef.ViewBuilder;
+import com.fognl.android.screendef.ViewUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,13 @@ public class ImageViewAttributes extends ViewAttributes<TextView> {
             public void apply(Context context, ImageView view, Values attrs, String name) {
                 final String url = attrs.getString(name);
                 ViewBuilder.get().setImageViewIcon(view, url);
+            }
+        });
+
+        applicators.put("scaleType", new Applicator<ImageView>() {
+            @Override
+            public void apply(Context context, ImageView view, Values attrs, String name) {
+                view.setScaleType(ViewUtils.toScaleType(attrs.getString(name)));
             }
         });
     }

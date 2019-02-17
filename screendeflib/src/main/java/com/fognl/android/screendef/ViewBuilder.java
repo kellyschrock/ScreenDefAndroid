@@ -52,6 +52,10 @@ public class ViewBuilder {
         void onBitmap(Bitmap bmp);
     }
 
+    public interface ImageUrlCallback {
+        String fixImageUrl(String url);
+    }
+
     public static class BuildResult {
         final View view;
         final Map<String, View> viewIds;
@@ -91,6 +95,8 @@ public class ViewBuilder {
     private final Set<ViewEventListener> mViewEventListeners = new HashSet<>();
     private final Set<EventAttacher> mEventAttachers = new HashSet<>();
     private final Set<ValueGetter> mValueGetters = new HashSet<>();
+
+    private ImageUrlCallback mImageUrlCallback;
 
     private final Context mContext;
 
@@ -147,6 +153,11 @@ public class ViewBuilder {
 
     public ViewBuilder removeValueGetter(ValueGetter getter) {
         mValueGetters.remove(getter);
+        return this;
+    }
+
+    public ViewBuilder setImageUrlCallback(ImageUrlCallback callback) {
+        mImageUrlCallback = callback;
         return this;
     }
 
@@ -265,12 +276,22 @@ public class ViewBuilder {
         return list;
     }
 
-    public void setImageViewIcon(ImageView img, String url) {
-        Glide.with(img.getContext())
-                .load(url).into(img);
+    public void setImageViewIcon(final ImageView img, String inputUrl) {
+        getIcon(img.getContext(), inputUrl, new BitmapCallback() {
+            @Override
+            public void onBitmap(Bitmap bmp) {
+                img.setImageBitmap(bmp);
+            }
+        });
     }
 
-    public void getIcon(Context context, String url, final BitmapCallback callback) {
+    public void getIcon(Context context, String inputUrl, final BitmapCallback callback) {
+        String url = inputUrl;
+
+        if(!url.startsWith("http") && mImageUrlCallback != null) {
+            url = mImageUrlCallback.fixImageUrl(url);
+        }
+
         Glide.with(context).asBitmap().load(url).into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -279,7 +300,13 @@ public class ViewBuilder {
         });
     }
 
-    public void getIcon(Context context, String url, SimpleTarget<Bitmap> callback) {
+    public void getIcon(Context context, String inputUrl, SimpleTarget<Bitmap> callback) {
+        String url = inputUrl;
+
+        if(!url.startsWith("http") && mImageUrlCallback != null) {
+            url = mImageUrlCallback.fixImageUrl(url);
+        }
+
         Glide.with(context).asBitmap().load(url).into(callback);
     }
 
