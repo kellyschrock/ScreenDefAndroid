@@ -63,6 +63,22 @@ public class ViewAttributes<ViewType extends View> {
             }
         });
 
+        applicators.put("visibility", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                view.setVisibility(ViewUtils.toVisibility(attrs.getString(name)));
+            }
+        });
+
+        applicators.put("visible", new Applicator<View>() {
+            @Override
+            public void apply(Context context, View view, Values attrs, String name) {
+                final int viz = (attrs.getBoolean(name, true))?
+                        View.VISIBLE: View.INVISIBLE;
+                view.setVisibility(viz);
+            }
+        });
+
         applicators.put("focusable", new Applicator<View>() {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {

@@ -137,6 +137,19 @@ public class ViewUtils {
         return result;
     }
 
+    public static int toVisibility(String input) {
+        final String[] names = new String[] { "visible", "invisible", "gone" };
+        final int[] values = new int[] {
+                View.VISIBLE, View.INVISIBLE, View.GONE
+        };
+
+        for(int i = 0, size = names.length; i < size; ++i) {
+            if(input.equals(names[i])) return values[i];
+        }
+
+        return View.VISIBLE;
+    }
+
     public static int toGravity(String grav) {
         int gravity = Gravity.NO_GRAVITY;
 
