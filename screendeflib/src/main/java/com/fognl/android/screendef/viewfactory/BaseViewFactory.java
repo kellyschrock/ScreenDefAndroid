@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.fognl.android.screendef.ViewFactory;
@@ -39,6 +40,7 @@ public class BaseViewFactory implements ViewFactory {
             case "RadioGroup": return new RadioGroup(context);
             case "RadioButton": return new RadioButton(context);
             case "CheckBox": return new CheckBox(context);
+            case "Switch": return new Switch(context);
             case "FrameLayout": return new FrameLayout(context);
             case "LinearLayout": return new LinearLayout(context);
             case "RelativeLayout": return new RelativeLayout(context);

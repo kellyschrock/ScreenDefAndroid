@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,6 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.fognl.android.screendef.attributes.CompoundButtonAttributes;
 import com.fognl.android.screendef.attributes.EditTextAttributes;
 import com.fognl.android.screendef.attributes.ImageViewAttributes;
 import com.fognl.android.screendef.attributes.LayoutAttributes;
@@ -31,7 +30,7 @@ import com.fognl.android.screendef.events.SpinnerEventAttacher;
 import com.fognl.android.screendef.events.ViewEventAttacher;
 import com.fognl.android.screendef.events.ViewEventListener;
 import com.fognl.android.screendef.module.ViewBuilderModule;
-import com.fognl.android.screendef.values.CheckBoxGetter;
+import com.fognl.android.screendef.values.CompoundButtonGetter;
 import com.fognl.android.screendef.values.EditTextGetter;
 import com.fognl.android.screendef.values.ProgressBarGetter;
 import com.fognl.android.screendef.values.RadioGroupGetter;
@@ -325,6 +324,7 @@ public class ViewBuilder {
         mAttributeProcessors.add(new ImageViewAttributes());
         mAttributeProcessors.add(new SpinnerAttributes());
         mAttributeProcessors.add(new ProgressBarAttributes());
+        mAttributeProcessors.add(new CompoundButtonAttributes());
     }
 
     void initViewFactories() {
@@ -333,7 +333,7 @@ public class ViewBuilder {
 
     void initValueGetters() {
         mValueGetters.add(new EditTextGetter());
-        mValueGetters.add(new CheckBoxGetter());
+        mValueGetters.add(new CompoundButtonGetter());
         mValueGetters.add(new RadioGroupGetter());
         mValueGetters.add(new ProgressBarGetter());
         mValueGetters.add(new SpinnerGetter());

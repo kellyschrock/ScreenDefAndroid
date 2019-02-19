@@ -107,6 +107,18 @@
 					"layout_width": "wrap_content",
 					"layout_height": "wrap_content",
 					"text": "CHECK this out",
+					"checked": true,
+					"on_check": { "0" : 0 }
+				},
+				{
+					"type": "Switch",
+					"id": "my_switch",
+					"name": "switched_on",
+					"layout_width": "wrap_content",
+					"layout_height": "wrap_content",
+					"layout_marginLeft": "12dip",
+					"text": "Switch this",
+					"checked": true,
 					"on_check": { "0" : 0 }
 				},
 				{
