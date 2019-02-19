@@ -228,7 +228,7 @@ public class ViewUtils {
             }
 
             if(attrs.containsKey("layout_marginRight")) {
-                mp.rightMargin = attrs.getInt("layout_marginRight", 0);
+                mp.rightMargin = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString("layout_marginRight"));
             }
         }
     }
