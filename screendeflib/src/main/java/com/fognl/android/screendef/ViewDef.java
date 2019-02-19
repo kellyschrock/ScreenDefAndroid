@@ -80,8 +80,8 @@ public class ViewDef {
     }
 
     public ViewGroup.LayoutParams getLayoutParams(View view, View parentView) {
-        final int width = ViewUtils.toViewSize(attrs.getString("layout_width"));
-        final int height = ViewUtils.toViewSize(attrs.getString("layout_height"));
+        final int width = ViewUtils.toViewSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString("layout_width"));
+        final int height = ViewUtils.toViewSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString("layout_height"));
 
         final Class paramsClass = findClassIn(parentView.getClass(), "LayoutParams");
 

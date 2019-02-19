@@ -17,8 +17,8 @@
 			"background": "grey",
 			"paddingRight": "30",
 			"paddingLeft": "10",
-			"paddingTop": "10",
-			"paddingBottom": "10",
+			"paddingTop": 30,
+			"paddingBottom": "20dip",
 			"children": [
 				{
 					"type": "ImageView",

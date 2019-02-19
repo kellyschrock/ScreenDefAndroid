@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -99,6 +101,7 @@ public class ViewBuilder {
     private ImageUrlCallback mImageUrlCallback;
 
     private final Context mContext;
+    private final DisplayMetrics mDisplayMetrics;
 
     private ViewBuilder(Context context) {
         mContext = context;
@@ -106,7 +109,11 @@ public class ViewBuilder {
         initViewFactories();
         initEventAttachers();
         initValueGetters();
+
+        mDisplayMetrics = context.getResources().getDisplayMetrics();
     }
+
+    public DisplayMetrics getDisplayMetrics() { return mDisplayMetrics; }
 
     public ViewBuilder addModule(ViewBuilderModule module) {
         addAttributeProcessor(module.getAttributeProcessor());

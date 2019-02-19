@@ -96,7 +96,7 @@ public class ViewAttributes<ViewType extends View> {
         applicators.put("minWidth", new Applicator<View>() {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {
-                view.setMinimumWidth(attrs.getInt(name, 0));
+                view.setMinimumWidth(ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString(name)));
             }
         });
 
@@ -145,7 +145,7 @@ public class ViewAttributes<ViewType extends View> {
         applicators.put("padding", new Applicator<View>() {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
+                final int padding = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString(name));
                 view.setPadding(padding, padding, padding, padding);
             }
         });
@@ -153,7 +153,7 @@ public class ViewAttributes<ViewType extends View> {
         applicators.put("paddingLeft", new Applicator<View>() {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
+                final int padding = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString(name));
                 view.setPadding(padding, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
             }
         });
@@ -161,7 +161,7 @@ public class ViewAttributes<ViewType extends View> {
         applicators.put("paddingRight", new Applicator<View>() {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
+                final int padding = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString(name));
                 view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), padding, view.getPaddingBottom());
             }
         });
@@ -169,7 +169,7 @@ public class ViewAttributes<ViewType extends View> {
         applicators.put("paddingTop", new Applicator<View>() {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
+                final int padding = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString(name));
                 view.setPadding(view.getPaddingLeft(), padding, view.getPaddingRight(), view.getPaddingBottom());
             }
         });
@@ -177,7 +177,7 @@ public class ViewAttributes<ViewType extends View> {
         applicators.put("paddingBottom", new Applicator<View>() {
             @Override
             public void apply(Context context, View view, Values attrs, String name) {
-                final int padding = attrs.getInt(name, 0);
+                final int padding = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString(name));
                 view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), padding);
             }
         });

@@ -3,6 +3,7 @@ package com.fognl.android.screendef;
 import android.graphics.Color;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -27,14 +28,22 @@ public class ViewUtils {
         }
     }
 
-    public static int toViewSize(String value) {
+    public static int toViewSize(DisplayMetrics metrics, String value) {
         if("parent".equals(value)) return ViewGroup.LayoutParams.MATCH_PARENT;
         if("match_parent".equals(value)) return ViewGroup.LayoutParams.MATCH_PARENT;
         if("wrap_content".equals(value)) return ViewGroup.LayoutParams.WRAP_CONTENT;
 
+        return toScaledSize(metrics, value);
+    }
+
+    public static int toScaledSize(DisplayMetrics metrics, String value) {
         String v = value;
         if(v.endsWith("dip")) {
             v = v.substring(0, v.indexOf("dip"));
+
+            final int result = (int)(toInt(v, 0) * metrics.density);
+            Log.v(TAG, String.format("Convert %s to %d", value, result));
+            return result;
         }
 
         return toInt(v, 0);
@@ -202,20 +211,20 @@ public class ViewUtils {
             ViewGroup.MarginLayoutParams mp = (ViewGroup.MarginLayoutParams)lp;
 
             if(attrs.containsKey("layout_margin")) {
-                final int margin = attrs.getInt("layout_margin", 0);
+                final int margin = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString("layout_margin"));
                 mp.leftMargin = mp.rightMargin = mp.topMargin = mp.bottomMargin = margin;
             }
 
             if(attrs.containsKey("layout_marginTop")) {
-                mp.topMargin = attrs.getInt("layout_marginTop", 0);
+                mp.topMargin = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString("layout_marginTop"));
             }
 
-            if(attrs.containsKey("layout_marginTop")) {
-                mp.bottomMargin = attrs.getInt("layout_marginBottom", 0);
+            if(attrs.containsKey("layout_marginBottom")) {
+                mp.bottomMargin = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString("layout_marginBottom"));
             }
 
             if(attrs.containsKey("layout_marginLeft")) {
-                mp.leftMargin = attrs.getInt("layout_marginLeft", 0);
+                mp.leftMargin = ViewUtils.toScaledSize(ViewBuilder.get().getDisplayMetrics(), attrs.getString("layout_marginLeft"));
             }
 
             if(attrs.containsKey("layout_marginRight")) {
@@ -237,7 +246,7 @@ public class ViewUtils {
     public static void callIntSetter(Object obj, String name, int value) {
         try {
             final Class type = obj.getClass();
-            Log.v(TAG, String.format("type=%s", type.getSimpleName()));
+//            Log.v(TAG, String.format("type=%s", type.getSimpleName()));
 
             final Method method = type.getDeclaredMethod(name, new Class[] { Integer.TYPE });
             method.invoke(obj, value);
