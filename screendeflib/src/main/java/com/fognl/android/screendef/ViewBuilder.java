@@ -14,10 +14,12 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.fognl.android.screendef.attributes.CompoundButtonAttributes;
 import com.fognl.android.screendef.attributes.EditTextAttributes;
+import com.fognl.android.screendef.attributes.HorizontalScrollViewAttributes;
 import com.fognl.android.screendef.attributes.ImageViewAttributes;
 import com.fognl.android.screendef.attributes.LayoutAttributes;
 import com.fognl.android.screendef.attributes.ProgressBarAttributes;
 import com.fognl.android.screendef.attributes.RadioGroupAttributes;
+import com.fognl.android.screendef.attributes.ScrollViewAttributes;
 import com.fognl.android.screendef.attributes.SpinnerAttributes;
 import com.fognl.android.screendef.attributes.TextViewAttributes;
 import com.fognl.android.screendef.attributes.ViewAttributes;
@@ -325,6 +327,8 @@ public class ViewBuilder {
         mAttributeProcessors.add(new SpinnerAttributes());
         mAttributeProcessors.add(new ProgressBarAttributes());
         mAttributeProcessors.add(new CompoundButtonAttributes());
+        mAttributeProcessors.add(new ScrollViewAttributes());
+        mAttributeProcessors.add(new HorizontalScrollViewAttributes());
     }
 
     void initViewFactories() {
