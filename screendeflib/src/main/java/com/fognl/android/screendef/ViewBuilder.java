@@ -21,7 +21,7 @@ import com.fognl.android.screendef.attributes.RadioGroupAttributes;
 import com.fognl.android.screendef.attributes.SpinnerAttributes;
 import com.fognl.android.screendef.attributes.TextViewAttributes;
 import com.fognl.android.screendef.attributes.ViewAttributes;
-import com.fognl.android.screendef.events.CheckBoxEventAttacher;
+import com.fognl.android.screendef.events.CompoundButtonEventAttacher;
 import com.fognl.android.screendef.events.EditTextEventAttacher;
 import com.fognl.android.screendef.events.EventAttacher;
 import com.fognl.android.screendef.events.RadioGroupEventAttacher;
@@ -343,7 +343,7 @@ public class ViewBuilder {
         mEventAttachers.add(new ViewEventAttacher());
         mEventAttachers.add(new SeekBarEventAttacher());
         mEventAttachers.add(new SpinnerEventAttacher());
-        mEventAttachers.add(new CheckBoxEventAttacher());
+        mEventAttachers.add(new CompoundButtonEventAttacher());
         mEventAttachers.add(new RadioGroupEventAttacher());
         mEventAttachers.add(new EditTextEventAttacher());
     }

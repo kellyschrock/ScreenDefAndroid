@@ -1,22 +1,22 @@
 package com.fognl.android.screendef.events;
 
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.CompoundButton;
 
 import com.fognl.android.screendef.R;
 import com.fognl.android.screendef.Values;
 
-public class CheckBoxEventAttacher implements EventAttacher<CheckBox> {
+public class CompoundButtonEventAttacher implements EventAttacher<CompoundButton> {
     public static final String EVT_ON_CHECK = "on_check";
 
     @Override
     public boolean appliesTo(View view) {
-        return (view instanceof CheckBox);
+        return (view instanceof CompoundButton);
     }
 
     @Override
-    public void attachEventsTo(CheckBox view, final Iterable<ViewEventListener> listeners) {
+    public void attachEventsTo(CompoundButton view, final Iterable<ViewEventListener> listeners) {
         final Values attrs = (Values)view.getTag();
 
         if(attrs == null) return;
