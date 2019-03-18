@@ -16,7 +16,7 @@ public class RecyclerViewGetter implements ValueGetter<RecyclerViewWrapper> {
     public void getValuesFrom(RecyclerViewWrapper view, String name, Values output) {
         final RecyclerItem item = view.getSelectedItem();
         if(item != null) {
-            output.put(name, new Values().put("id", item.id).put("title", item.title));
+            output.put(name, new Values(item.values));
         }
     }
 }

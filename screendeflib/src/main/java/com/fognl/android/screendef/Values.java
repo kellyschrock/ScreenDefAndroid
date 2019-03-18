@@ -42,6 +42,11 @@ public class Values extends HashMap<String, Object> {
         super();
     }
 
+    public Values(Values input) {
+        this();
+        putAll(input);
+    }
+
     public boolean has(String name) {
         return (null != get(name));
     }
