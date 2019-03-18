@@ -33,7 +33,9 @@ public class RecyclerViewEventAttacher implements EventAttacher<RecyclerViewWrap
         view.setItemListener(new RecyclerAdapter.ItemListener() {
             @Override
             public void onItemSelected(int position, RecyclerItem item) {
-                Values itemValue = new Values().put("id", item.id).put("title", item.title);
+                Values itemValue = new Values();
+                itemValue.putAll(item.values);
+
                 on_item_selected.put("item", itemValue);
                 on_item_selected.put("position", position);
 

@@ -182,8 +182,8 @@
 							}
 						},
 						"items": [
-							{ "id": "item1", "title": "Title 1", "subtitle": "sub-title 1" },
-							{ "id": "item2", "title": "Title 2", "subtitle": "sub-title 2" },
+							{ "id": "item1", "title": "Title 1", "subtitle": "sub-title 1", "extra": "something" },
+							{ "id": "item2", "title": "Title 2", "subtitle": "sub-title 2",  "extra2": "something_else" },
 							{ "id": "item3", "title": "Title 3", "subtitle": "sub-title 3" },
 							{ "id": "item4", "title": "Title 4", "subtitle": "sub-title 4" },
 							{ "id": "item5", "title": "Title 5", "subtitle": "sub-title 5" },
