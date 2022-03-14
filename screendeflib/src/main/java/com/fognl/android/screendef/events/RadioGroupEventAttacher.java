@@ -31,7 +31,7 @@ public class RadioGroupEventAttacher implements EventAttacher<RadioGroup> {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton button = group.findViewById(checkedId);
                 final String radioId = (button != null)? (String)button.getTag(R.string.tag_view_id): "unknown";
-                final String screenId = (String)button.getTag(R.string.tag_view_screen);
+                final String screenId = (String)group.getTag(R.string.tag_view_screen);
 
                 on_check.put("checked_id", radioId);
 

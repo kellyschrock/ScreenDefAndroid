@@ -32,7 +32,7 @@ public class SpinnerEventAttacher implements EventAttacher<Spinner> {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 final SpinnerItem item = (SpinnerItem)parent.getAdapter().getItem(position);
                 Values itemValue = new Values().put("id", item.getId()).put("text", item.getText());
-                final String screenId = (String)view.getTag(R.string.tag_view_screen);
+                final String screenId = (String)parent.getTag(R.string.tag_view_screen);
 
                 on_item_selected.put("position", position);
                 on_item_selected.put("item", itemValue);
